@@ -1,0 +1,5 @@
+id,name,price,quantity,type,color,expiration_date
+1,oranges,0.10,500,food,,06-07-2021
+2,toilet paper,2.50,150,sanitary,,
+3,lipstick,6.80,15,makeup,red,04-02-2025
+4,dog leash,10.30,6,others,blue,

@@ -1,3 +1,7 @@
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 //методи
 //        - - методи за записване на продуктите - в името да има timestamp (точното време на записване на документа)
@@ -33,5 +37,79 @@ public class Store {
     private List<Product> products;
     private List<Product> shoppingCart;
     private List<Employee> employees;
+
+    public static List<Employee> readEmployeeFromCSV(String csvFilePath){
+        List<Employee> employees = new ArrayList<>();
+        try (BufferedReader br = new BufferedReader(new FileReader(csvFilePath))){
+            String line;
+            boolean firstLine = true;
+            while ((line=br.readLine()) != null){
+                if (firstLine) {
+                    firstLine= false;
+                    continue;
+                }
+                //employee_id,first_name,last_name,age,salary
+                String[] data = line.split(",");
+                int employee_id = Integer.parseInt(data[0]);
+                String first_name = data[1];
+                String last_name = data[2];
+                int age = Integer.parseInt(data[3]);
+                double salary = Double.parseDouble(data[4]);
+
+                Employee employee = new Employee(employee_id, first_name, last_name, age, salary);
+                employees.add(employee);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return employees;
+    }
+
+    public static List<Product> readProductsFromCSV(String csvFilePath) {
+        List<Product> products = new ArrayList<>();
+
+        try (BufferedReader br = new BufferedReader(new FileReader(csvFilePath))) {
+            String line;
+            boolean firstLine = true; // Прескочете първия ред (заглавния ред)
+            while ((line = br.readLine()) != null) {
+                if (firstLine) {
+                    firstLine = false;
+                    continue;
+                }
+
+                String[] data = line.split(",");
+                if (data.length == 7 || data.length == 5 || data.length == 6) {
+                    int product_id = Integer.parseInt(data[0]);
+                    String name = data[1];
+                    double price = Double.parseDouble(data[2]);
+                    int quantity = Integer.parseInt(data[3]);
+                    String type = data[4];
+
+                    String color = "";
+                    String expires_in = "";
+
+                    if (data.length == 7) {
+                        color = data[5];
+                        expires_in=data[6];
+
+                    }
+
+                    if (color == null||color=="") {
+                        color = "N/A";
+                    }
+                    if (expires_in == null||expires_in=="") {
+                        expires_in = "N/A";
+                    }
+
+                    Product product = new Product(product_id,name,quantity, price, color, expires_in);
+                    products.add(product);
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return products;
+    }
 
 }
