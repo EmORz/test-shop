@@ -1,5 +1,6 @@
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -34,12 +35,86 @@ import java.util.List;
 //        –void sortEmployeesBySalary()
 
 public class Store {
-    private List<Product> products;
+    private static List<Product> products;
     private List<Product> shoppingCart;
-    private List<Employee> employees;
+    private static List<Employee> employees;
+
+    public Store() {
+        this.products = new ArrayList<>();
+        this.shoppingCart = new ArrayList<>();
+        this.employees = new ArrayList<>();
+    }
+
+    public void printAllProducts(){
+        for (Product product:products
+             ) {
+            System.out.println("*".repeat(10));
+
+            System.out.println("ID на продукта: "+product.getProduct_id());
+            System.out.println("Име на продукта: "+product.getName());
+            System.out.println("Количество на продукта: "+product.getQuantity());
+            System.out.println("Цена на продукта: "+product.getPrice());
+            System.out.println("Цвят на продукта: "+product.getColor());
+            System.out.println("Срок на годност на продукта: "+product.getExpires_in());
+
+            System.out.println("*".repeat(10));
+            System.out.println("-".repeat(10));
+
+        }
+    }
+
+    private void saveEmployeeToCSV(String csvFilePath, List<Employee> employees){
+        try (FileWriter writer = new FileWriter(csvFilePath)) {
+            writer.write("employee_id,first_name,last_name,age,salary\n");
+            for (Employee employee:employees
+                 ) {
+                writer.write(String.format("%d,%s,%s,%d,%.2f\n",
+                        employee.getEmployee_id(),employee.getFirst_name(),
+                        employee.getLast_name(), employee.getAge(),
+                        employee.getSalary()));
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+    private void saveProductsToCSV(String csvFilePath, List<Product> products){
+        try (FileWriter writer = new FileWriter(csvFilePath)){
+            writer.write("product_id,name,price,quantity,type,color,expires_in\n");
+
+            for (Product product:products
+                 ) {
+                writer.write(String.format("%d,%s,%.2f,%d,%s,%s\n",
+                        product.getProduct_id(), product.getName(),
+                        product.getPrice(), product.getQuantity(),
+                        product.getColor(), product.getExpires_in()));
+            }
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void addProduct(Product product){
+        products.add(product);
+        saveProductsToCSV("product.CSV",products);
+    }
+    private void addEmployee(Employee employee){
+        employees.add(employee);
+        saveEmployeeToCSV("employee.CSV",employees);
+    }
+    public Product createProduct (int product_id, String name, int quantity, double price, String color, String expires_in){
+        Product product = new Product(product_id,name,quantity, price, color, expires_in);
+        addProduct(product);
+        return product;
+    }
+    public Employee createEmployee(int employee_id, String first_name, String last_name, int age, double salary){
+        Employee employee = new Employee(employee_id, first_name, last_name, age,salary);
+        addEmployee(employee);
+        return employee;
+    }
 
     public static List<Employee> readEmployeeFromCSV(String csvFilePath){
-        List<Employee> employees = new ArrayList<>();
+//        List<Employee> employees = new ArrayList<>();
         try (BufferedReader br = new BufferedReader(new FileReader(csvFilePath))){
             String line;
             boolean firstLine = true;
@@ -66,7 +141,7 @@ public class Store {
     }
 
     public static List<Product> readProductsFromCSV(String csvFilePath) {
-        List<Product> products = new ArrayList<>();
+//        List<Product> products = new ArrayList<>();
 
         try (BufferedReader br = new BufferedReader(new FileReader(csvFilePath))) {
             String line;

@@ -21,4 +21,28 @@ public class Product {
         this.color = color;
         this.expires_in = expires_in;
     }
+
+    public int getProduct_id() {
+        return product_id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public String getExpires_in() {
+        return expires_in;
+    }
 }

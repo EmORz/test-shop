@@ -24,4 +24,24 @@ public class Employee implements User {
     public void login(int employee_id, String first_name) {
 
     }
+
+    public int getEmployee_id() {
+        return employee_id;
+    }
+
+    public String getFirst_name() {
+        return first_name;
+    }
+
+    public String getLast_name() {
+        return last_name;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public double getSalary() {
+        return salary;
+    }
 }
