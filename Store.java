@@ -62,19 +62,71 @@ public class Store {
 
         }
     }
+    public List<Product> findProductById(int product_id){
+        List<Product> findProducts = new ArrayList<>();
 
+        for (Product product:products
+             ) {
+            if (product.getProduct_id() == product_id) {
+                findProducts.add(product);
+            }
+        }
+
+        if (findProducts.size()!=0) {
+            for (Product product:products
+                 ) {
+                System.out.println("Намерени са "+findProducts.size()+" бр. продукти.");
+                System.out.println("*".repeat(10));
+
+                System.out.println("ID на продукта: "+product.getProduct_id());
+                System.out.println("Име на продукта: "+product.getName());
+                System.out.println("Количество на продукта: "+product.getQuantity());
+                System.out.println("Цена на продукта: "+product.getPrice());
+                System.out.println("Цвят на продукта: "+product.getColor());
+                System.out.println("Срок на годност на продукта: "+product.getExpires_in());
+
+                System.out.println("*".repeat(10));
+                System.out.println("-".repeat(10));
+            }
+        }else {
+            System.out.println("Продукт с ID "+product_id+" не е намерен!");
+            return null;
+        }
+        return findProducts;
+
+    }
+    public void deleteEmployeeById(int employee_id){
+        List<Employee> employeeForDelete = new ArrayList<>();
+        boolean isHasEmployeeForDelete = false;
+        for (Employee employee:employees
+             ) {
+            if (employee.getEmployee_id() == employee_id) {
+                employeeForDelete.add(employee);
+                isHasEmployeeForDelete = true;
+            }
+        }
+        if (employeeForDelete != null&& isHasEmployeeForDelete) {
+            int id = employeeForDelete.get(0).getEmployee_id();
+            employees.removeAll(employeeForDelete);
+            saveEmployeeToCSV("employee.CSV", employees);
+            System.out.println("Служител/и с ID "+id+" са изтрит!");
+        }else {
+            System.out.println("Служител с ID "+employee_id+" не е намерен!");
+        }
+    }
     public void deleteProductById(int product_id){
         List<Product> productForRemove = new ArrayList<>();
-
+        boolean isHasProductForDelete = false;
         for (Product product:products
              ) {
             if (product.getProduct_id()==product_id) {
                 productForRemove.add(product);
+                isHasProductForDelete = true;
 
             }
         }
 
-        if (productForRemove != null) {
+        if (productForRemove != null && isHasProductForDelete) {
             int id = productForRemove.get(0).getProduct_id();
             products.removeAll(productForRemove);
             saveProductsToCSV("product.CSV", products);
@@ -117,12 +169,37 @@ public class Store {
     }
 
     private void addProduct(Product product){
-        products.add(product);
-        saveProductsToCSV("product.CSV",products);
+        int id = product.getProduct_id();
+        boolean isHasProduct = true;
+        for (Product productt:products
+             ) {
+            if (productt.getProduct_id() == id) {
+                System.out.println("Вече има запис с Id "+product.getProduct_id());
+                isHasProduct=false;
+                break;
+            }
+        }
+        if (isHasProduct) {
+            products.add(product);
+            saveProductsToCSV("product.CSV",products);
+        }
+
     }
     private void addEmployee(Employee employee){
-        employees.add(employee);
-        saveEmployeeToCSV("employee.CSV",employees);
+        int id = employee.getEmployee_id();
+        boolean isHasEmployee = true;
+        for (Employee employee1:employees
+        ) {
+            if (employee1.getEmployee_id() == id) {
+                System.out.println("Вече има запис с Id "+employee1.getEmployee_id());
+                isHasEmployee=false;
+                break;
+            }
+        }
+        if (isHasEmployee) {
+            employees.add(employee);
+            saveEmployeeToCSV("employee.CSV",employees);
+        }
     }
     public Product createProduct (int product_id, String name, int quantity, double price, String color, String expires_in){
         Product product = new Product(product_id,name,quantity, price, color, expires_in);

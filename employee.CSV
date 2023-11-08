@@ -1,5 +1,4 @@
 employee_id,first_name,last_name,age,salary
 1,Ivan,Ivanov,45,550,00
-2,Maria,Ivanova,22,450,00
-3,Angel,Petkov,50,750,00
 4,Ivan,Ivanov,32,820,00
+5,Ivan,Ivanov,35,820,00

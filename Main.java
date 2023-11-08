@@ -20,10 +20,12 @@ public class Main {
         var employeeFileName = "employee.CSV";
         var employeeData = Store.readEmployeeFromCSV(employeeFileName);
         System.out.println();
-//        store.createProduct(5, "Мюсли", 20, 6.25,"Н/А","01-02-2014");
-//        store.createEmployee(4, "Ivan", "Ivanov", 32, 820);
+//        store.createProduct(4, "Мюсли", 20, 6.25,"Н/А","01-02-2014");
+//        store.createEmployee(4, "Ivan", "Ivanov", 35, 820);
 //        store.printAllProducts();
         store.deleteProductById(5);
+//        store.deleteEmployeeById(2);
+//        store.findProductById(5);
 
 
 
