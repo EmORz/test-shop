@@ -63,6 +63,28 @@ public class Store {
         }
     }
 
+    public void deleteProductById(int product_id){
+        List<Product> productForRemove = new ArrayList<>();
+
+        for (Product product:products
+             ) {
+            if (product.getProduct_id()==product_id) {
+                productForRemove.add(product);
+
+            }
+        }
+
+        if (productForRemove != null) {
+            int id = productForRemove.get(0).getProduct_id();
+            products.removeAll(productForRemove);
+            saveProductsToCSV("product.CSV", products);
+            System.out.println("Продукт/и с ID "+id+" са изтрит!");
+        }else {
+            System.out.println("Продукт с ID "+product_id+" не е намерен!");
+
+        }
+    }
+
     private void saveEmployeeToCSV(String csvFilePath, List<Employee> employees){
         try (FileWriter writer = new FileWriter(csvFilePath)) {
             writer.write("employee_id,first_name,last_name,age,salary\n");

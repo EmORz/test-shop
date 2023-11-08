@@ -22,7 +22,8 @@ public class Main {
         System.out.println();
 //        store.createProduct(5, "Мюсли", 20, 6.25,"Н/А","01-02-2014");
 //        store.createEmployee(4, "Ivan", "Ivanov", 32, 820);
-        store.printAllProducts();
+//        store.printAllProducts();
+        store.deleteProductById(5);
 
 
 
