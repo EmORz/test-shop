@@ -45,6 +45,19 @@ public class Store {
         this.employees = new ArrayList<>();
     }
 
+    public Employee loginEmployee(int employee_id, String firstName){
+
+        for (Employee employee:employees
+             ) {
+            if (employee.getEmployee_id() == employee_id
+            && employee.getFirst_name().equalsIgnoreCase(firstName)) {
+                employee.login(employee_id, firstName);
+                break;
+            }
+        }
+
+        return null;
+    }
     public void printAllProducts(){
         for (Product product:products
              ) {

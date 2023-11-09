@@ -22,7 +22,7 @@ public class Employee implements User {
 
     @Override
     public void login(int employee_id, String first_name) {
-
+        System.out.println("Добре дошли "+first_name+"!");
     }
 
     public int getEmployee_id() {
