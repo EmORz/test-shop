@@ -7,6 +7,6 @@ public class User implements Interfaces.User {
 
     @Override
     public void login(int employee_id, String first_name) {
-
+        System.out.println("Добре дошли "+first_name+"!");
     }
 }
