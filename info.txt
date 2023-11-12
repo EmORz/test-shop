@@ -11,6 +11,8 @@ interface Interfaces.User - void login(int employee_id, String first_name);
 - - last_name,
 - - age,
 - - salary
+................
+
 конструктори
 гетъри/сетъри
 методи
