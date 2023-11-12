@@ -113,7 +113,7 @@ public class Main {
                     System.out.println("17. Принтиране на всички продукти, сортирани по:" +" име");
                     System.out.println("18. Принтиране на всички продукти, сортирани по:" +" цена");
                     System.out.println("19. Принтиране на всички продукти, сортирани по:" +" срок на годност");
-                    System.out.println("3. Изход");
+                    System.out.println("3. Изход ");
 
                     int employeeChoice = getUserChoice();
 
