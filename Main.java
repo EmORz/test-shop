@@ -100,6 +100,7 @@ public class Main {
                     System.out.println("4. Принтиране на определен продукт (по id)");
                     System.out.println("5. Принтиране на определен продукт (по име)");
                     System.out.println("6. Принтиране на всички продукти с цена, по-висока или равна на зададена от потребителя цена");
+                    System.out.println("7. Принтиране на всички продукти с цена, по-ниска от зададена от потребителя цена");
                     System.out.println("3. Изход");
 
                     int employeeChoice = getUserChoice();
@@ -111,6 +112,7 @@ public class Main {
                         case 4: store.findProductById();break;
                         case 5: store.findProductByName();break;
                         case 6: store.printProductsByPriceGreaterThanOrEqual();break;
+                        case 7: store.printProductsByPriceLower();break;
                         case 3: exitRequested=true;break;
                         default:
                             System.out.println("Невалиден избор. Моля, опитайте отново.");break;
