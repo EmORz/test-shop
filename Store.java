@@ -46,6 +46,8 @@ public class Store {
         this.employees = new ArrayList<>();
     }
 
+
+
     public Employee loginEmployee(int employee_id, String firstName){
 
         for (Employee employee:employees
@@ -572,5 +574,10 @@ public class Store {
         return products;
 
     }
+
+    public static List<Product>getProducts(){
+        return products;
+    }
+    public List<Employee>getEmployees(){return employees;}
 
 }

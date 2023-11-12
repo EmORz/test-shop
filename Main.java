@@ -9,7 +9,7 @@ import java.util.Scanner;
 //        4,dog leash,10.30,6,others,blue,
 public class Main {
     private static   Store store = new Store();
-    private static User user = new User();
+//    private static User user = new User();
     private static String employeeFileName = "employee.CSV";
     private static List<Employee> employeeData = Store.readEmployeeFromCSV(employeeFileName);
     private static boolean exitRequested = false;
@@ -61,7 +61,7 @@ public class Main {
         System.out.println("Добре дошли в модул за клиенти!");
         System.out.println("За да влезете в системата въведете user_name.");
         String enterUserName = scanner.next();
-        user.login(0, enterUserName);
+//        user.login(0, enterUserName);
         while (!exitRequested){
             System.out.println("1. Команда");
             System.out.println("2. Команда");
