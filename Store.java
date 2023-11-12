@@ -1,4 +1,8 @@
 import java.io.*;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.text.NumberFormat;
+import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -403,6 +407,8 @@ public class Store {
         }
     }
     public Product createProduct (){
+
+
         int current_id =0;
         for (Product product:products
              ) {
@@ -417,7 +423,9 @@ public class Store {
         System.out.println("Добавяне на количество на продукта: ");
         int quantity = scanner.nextInt();
         System.out.println("Добавяне на цена на продукта: ");
+
         double price = scanner.nextDouble();
+
         System.out.println("Добавяне вид на продукта: ");
         String type = scanner.next();
         System.out.println("Добавяне на цвят на продукта: ");
