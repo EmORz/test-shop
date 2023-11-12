@@ -4,6 +4,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 //методи
 //        - - методи за записване на продуктите - в името да има timestamp (точното време на записване на документа)
 //        - - метод за зареждане на продуктите
@@ -35,6 +36,7 @@ import java.util.List;
 //        –void sortEmployeesBySalary()
 
 public class Store {
+    private static Scanner scanner = new Scanner(System.in);
     private static List<Product> products;
     private List<Product> shoppingCart;
     private static List<Employee> employees;
@@ -75,7 +77,33 @@ public class Store {
 
         }
     }
-    public List<Product> findProductById(int product_id){
+    public void printProductsByPriceGreaterThanOrEqual() {
+        System.out.print("Въведи цена за търсене на продукти: ");
+        double price = scanner.nextDouble();
+
+        System.out.println("Продукти с цена по-висока или равна на " + price + ":");
+
+        for (Product product : products) {
+            if (product.getPrice() >= price) {
+
+                System.out.println("*".repeat(10));
+
+                System.out.println("ID на продукта: "+product.getProduct_id());
+                System.out.println("Име на продукта: "+product.getName());
+                System.out.println("Количество на продукта: "+product.getQuantity());
+                System.out.println("Цена на продукта: "+product.getPrice());
+                System.out.println("Цвят на продукта: "+product.getColor());
+                System.out.println("Срок на годност на продукта: "+product.getExpires_in());
+
+                System.out.println("*".repeat(10));
+                System.out.println("-".repeat(10));
+            }
+        }
+    }
+
+    public List<Product> findProductById(){
+        System.out.print("Въведи Id на продукт: ");
+        int product_id = scanner.nextInt();
         List<Product> findProducts = new ArrayList<>();
 
         for (Product product:products
@@ -86,7 +114,7 @@ public class Store {
         }
 
         if (findProducts.size()!=0) {
-            for (Product product:products
+            for (Product product:findProducts
                  ) {
                 System.out.println("Намерени са "+findProducts.size()+" бр. продукти.");
                 System.out.println("*".repeat(10));
@@ -103,6 +131,41 @@ public class Store {
             }
         }else {
             System.out.println("Продукт с ID "+product_id+" не е намерен!");
+            return null;
+        }
+        return findProducts;
+
+    }
+    public List<Product> findProductByName(){
+        List<Product> findProducts = new ArrayList<>();
+        System.out.print("Въведи име на продукт: ");
+        String product_name = scanner.next();
+
+        for (Product product:products
+        ) {
+            if (product.getName().equalsIgnoreCase(product_name)) {
+                findProducts.add(product);
+            }
+        }
+
+        if (findProducts.size()!=0) {
+            for (Product product:findProducts
+            ) {
+                System.out.println("Намерени са "+findProducts.size()+" бр. продукти.");
+                System.out.println("*".repeat(10));
+
+                System.out.println("ID на продукта: "+product.getProduct_id());
+                System.out.println("Име на продукта: "+product.getName());
+                System.out.println("Количество на продукта: "+product.getQuantity());
+                System.out.println("Цена на продукта: "+product.getPrice());
+                System.out.println("Цвят на продукта: "+product.getColor());
+                System.out.println("Срок на годност на продукта: "+product.getExpires_in());
+
+                System.out.println("*".repeat(10));
+                System.out.println("-".repeat(10));
+            }
+        }else {
+            System.out.println("Продукт с име "+product_name+" не е намерен!");
             return null;
         }
         return findProducts;

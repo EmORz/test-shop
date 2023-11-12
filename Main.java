@@ -27,7 +27,6 @@ public class Main {
 //        var employeeFileName = "employee.CSV";
 //        var employeeData = Store.readEmployeeFromCSV(employeeFileName);
 
-//                store.printAllProducts();
         while (!exitRequested){
 
             System.out.println("1. Вход като служител");
@@ -96,14 +95,22 @@ public class Main {
                 isHasEmployee=true;
                 employee.login(enterId, enterFirstName);
                 while (!exitRequested){
-                    System.out.println("1. Команда");
-                    System.out.println("2. Команда");
+                    System.out.println("1. Принтиране на всички продукти");
+                    System.out.println("2. Принтиране на всички продукти, сортирани по: име;цена;срок на годност");
+                    System.out.println("4. Принтиране на определен продукт (по id)");
+                    System.out.println("5. Принтиране на определен продукт (по име)");
+                    System.out.println("6. Принтиране на всички продукти с цена, по-висока или равна на зададена от потребителя цена");
                     System.out.println("3. Изход");
 
                     int employeeChoice = getUserChoice();
 
                     switch (employeeChoice){
-
+                        case 1: store.printAllProducts();break;
+                        case 2: // TODO: 12.11.2023 г. Принтиране на всички продукти, сортирани по: име;цена;срок на годност (за продуктите, които имат такъв, най-скоро изтичащите спрямо днешната дата се принтират първи)
+                        break;
+                        case 4: store.findProductById();break;
+                        case 5: store.findProductByName();break;
+                        case 6: store.printProductsByPriceGreaterThanOrEqual();break;
                         case 3: exitRequested=true;break;
                         default:
                             System.out.println("Невалиден избор. Моля, опитайте отново.");break;

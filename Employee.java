@@ -23,6 +23,8 @@ public class Employee implements User {
     @Override
     public void login(int employee_id, String first_name) {
         System.out.println("Добре дошли "+first_name+"!");
+        System.out.println("Изберете опция: ");
+
     }
 
     public int getEmployee_id() {
