@@ -113,14 +113,12 @@ public class Main {
                     System.out.println("17. Принтиране на всички продукти, сортирани по:" +" име");
                     System.out.println("18. Принтиране на всички продукти, сортирани по:" +" цена");
                     System.out.println("19. Принтиране на всички продукти, сортирани по:" +" срок на годност");
-                    System.out.println("3. Изход ");
+                    System.out.println("3. Изход");
 
                     int employeeChoice = getUserChoice();
 
                     switch (employeeChoice){
                         case 1: store.printAllProducts();break;
-                        case 2: // TODO: 12.11.2023 г. Принтиране на всички продукти, сортирани по: име;цена;срок на годност (за продуктите, които имат такъв, най-скоро изтичащите спрямо днешната дата се принтират първи)
-                        break;
                         case 4: store.findProductById();break;
                         case 5: store.findProductByName();break;
                         case 6: store.printProductsByPriceGreaterThanOrEqual();break;
