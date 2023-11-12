@@ -47,6 +47,8 @@ public class Store {
         this.employees = new ArrayList<>();
     }
 
+
+
     public Employee loginEmployee(int employee_id, String firstName){
 
         for (Employee employee:employees
@@ -85,6 +87,29 @@ public class Store {
 
         for (Product product : products) {
             if (product.getPrice() >= price) {
+
+                System.out.println("*".repeat(10));
+
+                System.out.println("ID на продукта: "+product.getProduct_id());
+                System.out.println("Име на продукта: "+product.getName());
+                System.out.println("Количество на продукта: "+product.getQuantity());
+                System.out.println("Цена на продукта: "+product.getPrice());
+                System.out.println("Цвят на продукта: "+product.getColor());
+                System.out.println("Срок на годност на продукта: "+product.getExpires_in());
+
+                System.out.println("*".repeat(10));
+                System.out.println("-".repeat(10));
+            }
+        }
+    }
+    public void printProductsByPriceLower() {
+        System.out.print("Въведи цена за търсене на продукти: ");
+        double price = scanner.nextDouble();
+
+        System.out.println("Продукти с цена по-ниска от " + price + ":");
+
+        for (Product product : products) {
+            if (product.getPrice() < price) {
 
                 System.out.println("*".repeat(10));
 
@@ -361,5 +386,10 @@ public class Store {
 
         return products;
     }
+
+    public static List<Product>getProducts(){
+        return products;
+    }
+    public List<Employee>getEmployees(){return employees;}
 
 }

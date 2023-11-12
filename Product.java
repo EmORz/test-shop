@@ -45,4 +45,6 @@ public class Product {
     public String getExpires_in() {
         return expires_in;
     }
+
+    public void setQuantity(int i){}
 }
