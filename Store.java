@@ -3,6 +3,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
+import java.util.stream.Collectors;
 //методи
 //        - - методи за записване на продуктите - в името да има timestamp (точното време на записване на документа)
 //        - - метод за зареждане на продуктите
@@ -451,6 +452,42 @@ public class Store {
                 .sort(employees, Comparator.comparing(Employee::getSalary));
         System.out.println("Служителите са сортирани по заплата.");
         printEmployees();
+    }
+
+    public void printProductsSortedByName(){
+        var sortedProducts = products.stream().
+                sorted(Comparator.comparing(Product::getName)).
+                collect(Collectors.toList());
+        printProductList(sortedProducts);
+    }
+    public void pritProcutsSortedByPrice(){
+        var sortedProducts = products.stream().
+                sorted(Comparator.comparing(Product::getPrice)).
+                collect(Collectors.toList());
+        printProductList(sortedProducts);
+    }
+    public void printProductsSortedByExpirationDate(){
+        var sortedProducts = products.stream()
+                .filter(product -> product.getExpires_in() != null)
+                .sorted(Comparator.comparing(Product::getExpires_in))
+                .collect(Collectors.toList());
+        printProductList(sortedProducts);
+    }
+    private void printProductList(List<Product> productList) {
+        for (Product product : productList) {
+
+            System.out.println("*".repeat(10));
+
+            System.out.println("ID на продукта: "+product.getProduct_id());
+            System.out.println("Име на продукта: "+product.getName());
+            System.out.println("Количество на продукта: "+product.getQuantity());
+            System.out.println("Цена на продукта: "+product.getPrice());
+            System.out.println("Цвят на продукта: "+product.getColor());
+            System.out.println("Срок на годност на продукта: "+product.getExpires_in());
+
+            System.out.println("*".repeat(10));
+            System.out.println("-".repeat(10));
+        }
     }
 
 

@@ -110,6 +110,9 @@ public class Main {
                     System.out.println("14. Изтриване на продукт (по id)");
                     System.out.println("15. Сортиране на служителите по:" +"име");
                     System.out.println("16. Сортиране на служителите по:" +"заплата");
+                    System.out.println("17. Принтиране на всички продукти, сортирани по:" +" име");
+                    System.out.println("18. Принтиране на всички продукти, сортирани по:" +" цена");
+                    System.out.println("19. Принтиране на всички продукти, сортирани по:" +" срок на годност");
                     System.out.println("3. Изход");
 
                     int employeeChoice = getUserChoice();
@@ -131,6 +134,9 @@ public class Main {
                         case 14: store.deleteProductById();break;
                         case 15: store.sortEmployeesByName();break;
                         case 16: store.sortEmployeeBySalary();break;
+                        case 17: store.printProductsSortedByName();break;
+                        case 18: store.pritProcutsSortedByPrice();break;
+                        case 19: store.printProductsSortedByExpirationDate();break;
                         case 3: exitRequested=true;break;
                         default:
                             System.out.println("Невалиден избор. Моля, опитайте отново.");break;
