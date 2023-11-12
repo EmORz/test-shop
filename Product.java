@@ -12,16 +12,22 @@ public class Product {
     private  String name;
     private int quantity;
     private double price;
+    private String type;
     private String color;
     private LocalDate expires_in;
 
-    public Product(int product_id, String name, int quantity, double price, String color, LocalDate expires_in) {
+    public Product(int product_id, String name, int quantity, double price,String type, String color, LocalDate expires_in) {
         this.product_id = product_id;
         this.name = name;
         this.quantity = quantity;
         this.price = price;
+        this.type = type;
         this.color = color;
         this.expires_in = expires_in;
+    }
+
+    public String getType() {
+        return type;
     }
 
     public int getProduct_id() {

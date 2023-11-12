@@ -105,7 +105,7 @@ public class Store {
                 product.setQuantity(newQuantity);
                 addProduct(product);
                 System.out.println("Количествo на продукт с ID " + productId + " е променено на " + newQuantity);
-                return;
+                break;
             }
         }
         System.out.println("Продукт с ID " + productId + " не беше намерен.");
@@ -418,6 +418,8 @@ public class Store {
         int quantity = scanner.nextInt();
         System.out.println("Добавяне на цена на продукта: ");
         double price = scanner.nextDouble();
+        System.out.println("Добавяне вид на продукта: ");
+        String type = scanner.next();
         System.out.println("Добавяне на цвят на продукта: ");
         String color = scanner.next();
         System.out.println("Добавяне на срок на годност на продукта в дни: ");
@@ -425,7 +427,7 @@ public class Store {
         int additionalDays = scanner.nextInt();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         LocalDate expires_in = currentDate.plusDays(additionalDays);
-        Product product = new Product(product_id,name,quantity, price, color, expires_in);
+        Product product = new Product(product_id,name,quantity, price,type, color, expires_in);
         addProduct(product);
         return product;
     }
@@ -561,7 +563,7 @@ public class Store {
                         LocalDate expires_in = LocalDate.parse(expires_inStr, formatter);
 
 
-                        Product product = new Product(product_id,name,quantity, price, color, expires_in);
+                        Product product = new Product(product_id,name,quantity, price,type, color, expires_in);
                         products.add(product);
                     }
                 }

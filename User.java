@@ -61,7 +61,8 @@ public class User implements Interfaces.User {
     public void addToShoppingCart(int productId,int quantity){
         Product product=findProductById(productId);
         if(product!=null && product.getQuantity()>=quantity){
-            Product cartItme=new Product(product.getProduct_id(),product.getName(),quantity,product.getPrice(),product.getColor(),product.getExpires_in());
+            Product cartItme=new Product(product.getProduct_id(),product.getName(),quantity,product.getPrice(),
+                    product.getType(),product.getColor(),product.getExpires_in());
             shoppingCart.add(cartItme);
             product.setQuantity(product.getQuantity()-quantity);
             System.out.println("Added"+quantity+" "+product.getName()+"to the shopping cart.");
