@@ -1,0 +1,9 @@
+product_id,name,price,quantity,type,color,expires_in
+1,Oranges_new_Name,55,00,0,N/A,2021-07-06
+2,toilet paper,2,00,0,N/A,2021-07-06
+3,lipstick,6,00,0,red,2025-02-04
+4,dog leash,10,00,0,N/A,2021-07-06
+5,краставици,1,00,0,Няма,2023-11-12
+7,Хляб_Добруджа,3,00,0,Няма,2023-11-20
+8,Хляб Разград бял,2,00,0,N/A,2023-11-24
+9,testProduct,1,25,124,nqma,2023-11-27

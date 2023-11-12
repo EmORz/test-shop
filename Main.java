@@ -23,7 +23,7 @@ public class Main {
 //        Store store = new Store();
         System.out.println("Въведете име на файл с продукти: ");
         String productsFileName = "product.CSV";
-        var produtData = Store.readProductsFromCSV(productsFileName);
+        var produtData = Store.readProductsFromCSV();
 //        var employeeFileName = "employee.CSV";
 //        var employeeData = Store.readEmployeeFromCSV(employeeFileName);
 
@@ -101,6 +101,15 @@ public class Main {
                     System.out.println("5. Принтиране на определен продукт (по име)");
                     System.out.println("6. Принтиране на всички продукти с цена, по-висока или равна на зададена от потребителя цена");
                     System.out.println("7. Принтиране на всички продукти с цена, по-ниска от зададена от потребителя цена");
+                    System.out.println("8. Принтиране на всички продукти с количество, по-голямо или равно на зададено от потребителя количество");
+                    System.out.println("9. Принтиране на всички продукти с количество, по-малко от зададено от потребителя количество");
+                    System.out.println("10. Добавяне на продукт");
+                    System.out.println("11. Промяна на цената на продукт (по id)");
+                    System.out.println("12. Промяна на количеството на продукт (по id)");
+                    System.out.println("13. Промяна на името на продукт (по id)");
+                    System.out.println("14. Изтриване на продукт (по id)");
+                    System.out.println("15. Сортиране на служителите по:" +"име");
+                    System.out.println("16. Сортиране на служителите по:" +"заплата");
                     System.out.println("3. Изход");
 
                     int employeeChoice = getUserChoice();
@@ -113,6 +122,15 @@ public class Main {
                         case 5: store.findProductByName();break;
                         case 6: store.printProductsByPriceGreaterThanOrEqual();break;
                         case 7: store.printProductsByPriceLower();break;
+                        case 8: store.printAllProductsByQuantityGreaterThanOrEqual();break;
+                        case 9: store.printAllProductsByQuantityLower();break;
+                        case 10: store.createProduct();break;
+                        case 11: store.changeProductPriceById();break;
+                        case 12: store.changeProductQuantityById();break;
+                        case 13: store.changeProductNameById();break;
+                        case 14: store.deleteProductById();break;
+                        case 15: store.sortEmployeesByName();break;
+                        case 16: store.sortEmployeeBySalary();break;
                         case 3: exitRequested=true;break;
                         default:
                             System.out.println("Невалиден избор. Моля, опитайте отново.");break;

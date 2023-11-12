@@ -1,3 +1,5 @@
+import java.time.LocalDate;
+
 //клас Product
 //        - - product_id,
 //        - - name,
@@ -11,9 +13,9 @@ public class Product {
     private int quantity;
     private double price;
     private String color;
-    private String expires_in;
+    private LocalDate expires_in;
 
-    public Product(int product_id, String name, int quantity, double price, String color, String expires_in) {
+    public Product(int product_id, String name, int quantity, double price, String color, LocalDate expires_in) {
         this.product_id = product_id;
         this.name = name;
         this.quantity = quantity;
@@ -42,7 +44,19 @@ public class Product {
         return color;
     }
 
-    public String getExpires_in() {
+    public LocalDate getExpires_in() {
         return expires_in;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
     }
 }
