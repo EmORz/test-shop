@@ -50,8 +50,6 @@ public class Store {
         this.employees = new ArrayList<>();
     }
 
-
-
     public Employee loginEmployee(int employee_id, String firstName){
 
         for (Employee employee:employees
@@ -117,12 +115,9 @@ public class Store {
     }
 
     public void changeProductPriceById() {
-
-
         System.out.println("Въведете ID на продукта: ");
         int productId = scanner.nextInt();
         System.out.println("Въедете нова цена на продукта: ");
-//        double newPrice = scanner.nextDouble();
 
         double newPrice;
         while (true) {
@@ -134,9 +129,6 @@ public class Store {
                 scanner.next(); // Изчистване на буфера от грешни данни
             }
         }
-
-
-
         for (Product product : products) {
             if (product.getProduct_id() == productId) {
                 product.setPrice(newPrice);
@@ -424,8 +416,6 @@ public class Store {
         }
     }
     public Product createProduct (){
-
-
         int current_id =0;
         for (Product product:products
              ) {
@@ -448,7 +438,7 @@ public class Store {
         System.out.println("Добавяне на срок на годност на продукта в дни: ");
         LocalDate currentDate = LocalDate.now();
         int additionalDays = scanner.nextInt();
-//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+
         LocalDate expires_in = currentDate.plusDays(additionalDays);
         Product product = new Product(product_id,name,quantity, price,type, color, expires_in);
         addProduct(product);
@@ -600,12 +590,10 @@ public class Store {
             System.out.println("Няма налични файлове с продукти.");
         }
         return products;
-
     }
 
     public static List<Product>getProducts(){
         return products;
     }
     public List<Employee>getEmployees(){return employees;}
-
 }

@@ -21,7 +21,7 @@ public class Main {
 //        на потребителя се дава възможност да избере като какъв иска да я използва.
 //        Всеки служител има уникално employee_id. Всяка стока има уникално product_id.
 //        Информация за клиентите не се съхранява.
-//        Store store = new Store();
+
         System.out.println("Въведете име на файл с продукти: ");
         String productsFileName = "product.CSV";
         var produtData = Store.readProductsFromCSV();
@@ -45,12 +45,6 @@ public class Main {
         }
         exitFromProgram();
 
-//        store.createProduct(4, "Мюсли", 20, 6.25,"Н/А","01-02-2014");
-//        store.createEmployee(4, "Ivan", "Ivanov", 35, 820);
-//        store.printAllProducts();
-//        store.deleteProductById(5);
-//        store.deleteEmployeeById(2);
-//        store.findProductById(5);
     }
 
     private static void exitFromProgram() {
