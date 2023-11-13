@@ -1,3 +1,4 @@
+import java.text.ParseException;
 import java.util.List;
 import java.util.Scanner;
 //public Product createProduct (int product_id, String name, int quantity, double price, String color, String expires_in){
@@ -14,7 +15,7 @@ public class Main {
     private static List<Employee> employeeData = Store.readEmployeeFromCSV(employeeFileName);
     private static boolean exitRequested = false;
     private static Scanner scanner = new Scanner(System.in);
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ParseException {
 //        В системата ще има два вида потребители - служители и обикновени клиенти.
 //        При стартиране на програмата (след зареждане на данните, което се обяснява по-надолу в описанието на задачата)
 //        на потребителя се дава възможност да избере като какъв иска да я използва.

@@ -84,6 +84,7 @@ public class Store {
     }
 
     public void changeProductNameById() {
+        scanner.useDelimiter("");
         System.out.println("Въведете ID на продукта: ");
         int productId = scanner.nextInt();
         System.out.println("Въедете ново име на продукта: ");
@@ -116,10 +117,26 @@ public class Store {
     }
 
     public void changeProductPriceById() {
+
+
         System.out.println("Въведете ID на продукта: ");
         int productId = scanner.nextInt();
         System.out.println("Въедете нова цена на продукта: ");
-        double newPrice = scanner.nextDouble();
+//        double newPrice = scanner.nextDouble();
+
+        double newPrice;
+        while (true) {
+            if (scanner.hasNextDouble()) {
+                newPrice = scanner.nextDouble();
+                break;
+            } else {
+                System.out.println("Невалидна цена. Моля, въведете валидно число за цената.");
+                scanner.next(); // Изчистване на буфера от грешни данни
+            }
+        }
+
+
+
         for (Product product : products) {
             if (product.getProduct_id() == productId) {
                 product.setPrice(newPrice);
@@ -356,13 +373,13 @@ public class Store {
         String fileName = "products_" + timestamp.format(formatter) + ".CSV";
 
         try (FileWriter writer = new FileWriter(fileName)){
-            writer.write("product_id,name,price,quantity,type,color,expires_in\n");
+            writer.write("product_id;name;price;quantity;type;color;expires_in\n");
 
             for (Product product:products
                  ) {
-                writer.write(String.format("%d,%s,%.2f,%d,%s,%s\n",
+                writer.write(String.format("%d;%s;%.2f;%d;%s;%s;%s\n",
                         product.getProduct_id(), product.getName(),
-                        product.getPrice(), product.getQuantity(),
+                        product.getPrice(), product.getQuantity(),product.getType(),
                         product.getColor(), product.getExpires_in()));
             }
 
@@ -423,9 +440,7 @@ public class Store {
         System.out.println("Добавяне на количество на продукта: ");
         int quantity = scanner.nextInt();
         System.out.println("Добавяне на цена на продукта: ");
-
         double price = scanner.nextDouble();
-
         System.out.println("Добавяне вид на продукта: ");
         String type = scanner.next();
         System.out.println("Добавяне на цвят на продукта: ");
@@ -433,7 +448,7 @@ public class Store {
         System.out.println("Добавяне на срок на годност на продукта в дни: ");
         LocalDate currentDate = LocalDate.now();
         int additionalDays = scanner.nextInt();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         LocalDate expires_in = currentDate.plusDays(additionalDays);
         Product product = new Product(product_id,name,quantity, price,type, color, expires_in);
         addProduct(product);
@@ -502,7 +517,6 @@ public class Store {
         }
     }
 
-
     public static List<Employee> readEmployeeFromCSV(String csvFilePath){
 //        List<Employee> employees = new ArrayList<>();
         try (BufferedReader br = new BufferedReader(new FileReader(csvFilePath))){
@@ -530,7 +544,7 @@ public class Store {
         return employees;
     }
 
-    public static List<Product> readProductsFromCSV() {
+    public static List<Product> readProductsFromCSV() throws ParseException {
         File directory = new File(".");
         File[] files = directory.listFiles((dir, name) -> name.startsWith("products_") && name.endsWith(".CSV"));
 
@@ -538,6 +552,9 @@ public class Store {
             Arrays.sort(files, (f1, f2) -> Long.compare(f2.lastModified(), f1.lastModified()));
             File lastFile = files[0];
             try (BufferedReader br = new BufferedReader(new FileReader(lastFile))) {
+                Scanner scanner = new Scanner(br);
+                scanner.useDelimiter(";");
+
                 String line;
                 boolean firstLine = true; // Прескочете първия ред (заглавния ред)
                 while ((line = br.readLine()) != null) {
@@ -546,11 +563,12 @@ public class Store {
                         continue;
                     }
 
-                    String[] data = line.split(",");
+                    String[] data = line.split(";");
                     if (data.length == 7 || data.length == 5 || data.length == 6) {
+                        NumberFormat numberFormat = NumberFormat.getNumberInstance(Locale.ROOT);
                         int product_id = Integer.parseInt(data[0]);
                         String name = data[1];
-                        double price = Double.parseDouble(data[2]);
+                        double price =numberFormat.parse(data[2]).doubleValue()/100;
                         int quantity = Integer.parseInt(data[3]);
                         String type = data[4];
 
@@ -566,7 +584,7 @@ public class Store {
                         if (color == null||color=="") {
                             color = "N/A";
                         }
-//
+
                         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
                         LocalDate expires_in = LocalDate.parse(expires_inStr, formatter);
 
