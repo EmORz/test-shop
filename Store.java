@@ -630,7 +630,7 @@ public class Store {
                                 product=new OthersProduct(product_id,name,quantity, price,type, color, expires_in);
                                 break;
                             default:
-                                System.out.println("невалиден тип продукт!");
+                                System.out.println("невалиден 1 тип продукт!");
                                 break;
                         }
                         products.add(product);
