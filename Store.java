@@ -430,7 +430,17 @@ public class Store {
         System.out.println("Добавяне на количество на продукта: ");
         int quantity = scanner.nextInt();
         System.out.println("Добавяне на цена на продукта: ");
-        double price = scanner.nextDouble();
+        double price;
+        while (true){
+            if (scanner.hasNextDouble()) {
+                price = scanner.nextDouble();
+                break;
+            }else {
+                System.out.println("Невалидна цена. Моля, въведете валидно число за цената.");
+                scanner.next(); // Изчистване на буфера от грешни данни
+            }
+        }
+
         System.out.println("Добавяне вид на продукта: ");
         String type = scanner.next();
         System.out.println("Добавяне на цвят на продукта: ");
@@ -490,6 +500,29 @@ public class Store {
                 .collect(Collectors.toList());
         printProductList(sortedProducts);
     }
+
+    public void printAllProductsSortedByNamePriceExpirationDate(){
+        var sortedProducts =
+                products.stream()
+                        .sorted(Comparator.comparing(Product::getName)
+                                .thenComparing(Product::getPrice)
+                                .thenComparing(Product::getExpires_in))
+                        .collect(Collectors.toList());
+        printProductList(sortedProducts);
+
+    }
+
+    public void printProductsByCategory(){
+        System.out.println("Въведете категория на продукт: ");
+        String category = scanner.next();
+        for (Product product:products
+             ) {
+            if (product.getType().equalsIgnoreCase(category)) {
+                System.out.println(product);
+            }
+        }
+    }
+
     private void printProductList(List<Product> productList) {
         for (Product product : productList) {
 
@@ -578,8 +611,28 @@ public class Store {
                         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
                         LocalDate expires_in = LocalDate.parse(expires_inStr, formatter);
 
+                        Product product = null;
 
-                        Product product = new Product(product_id,name,quantity, price,type, color, expires_in);
+                        switch (type.toLowerCase()){
+                            case "food":
+                                product=new FoodProduct(product_id,name,quantity, price,type, color, expires_in);
+                            break;
+                            case "drinks":
+                                product=new DrinksProduct(product_id,name,quantity, price,type, color, expires_in);
+                                break;
+                            case "sanitary":
+                                product=new SanitaryProduct(product_id,name,quantity, price,type, color, expires_in);
+                                break;
+                            case "makeup":
+                                product=new MakeUpProduct(product_id,name,quantity, price,type, color, expires_in);
+                                break;
+                            case "others":
+                                product=new OthersProduct(product_id,name,quantity, price,type, color, expires_in);
+                                break;
+                            default:
+                                System.out.println("невалиден тип продукт!");
+                                break;
+                        }
                         products.add(product);
                     }
                 }
