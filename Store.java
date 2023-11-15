@@ -82,11 +82,12 @@ public class Store {
     }
 
     public void changeProductNameById() {
-        scanner.useDelimiter("");
+
         System.out.println("Въведете ID на продукта: ");
         int productId = scanner.nextInt();
+        scanner.nextLine();
         System.out.println("Въедете ново име на продукта: ");
-        String newName = scanner.next();
+        String newName = scanner.nextLine();
         for (Product product : products) {
             if (product.getProduct_id() == productId) {
                 product.setName(newName);
@@ -426,7 +427,7 @@ public class Store {
         int product_id = current_id+1;
         System.out.println("Id на продукта: "+product_id);
         System.out.println("Добавяне на име на продукта: ");
-        String name = scanner.next();
+        String name = scanner.nextLine();
         System.out.println("Добавяне на количество на продукта: ");
         int quantity = scanner.nextInt();
         System.out.println("Добавяне на цена на продукта: ");
@@ -442,9 +443,9 @@ public class Store {
         }
 
         System.out.println("Добавяне вид на продукта: ");
-        String type = scanner.next();
+        String type = scanner.nextLine();
         System.out.println("Добавяне на цвят на продукта: ");
-        String color = scanner.next();
+        String color = scanner.nextLine();
         System.out.println("Добавяне на срок на годност на продукта в дни: ");
         LocalDate currentDate = LocalDate.now();
         int additionalDays = scanner.nextInt();

@@ -1,0 +1,78 @@
+Класове; Методи
+два вида .csv файла-> product.CSV / employee.CSV
+interface Interfaces.User - void login(int employee_id, String first_name);
+клас Interfaces.User implement Interfaces.User -
+– userId;
+– String userName;
+- void login(int userId, String userName);
+клас Employee implement Interfaces.User
+- - employee_id,
+- - first_name,
+- - last_name,
+- - age,
+- - salary
+................
+
+конструктори
+гетъри/сетъри
+методи
+void login(int employee_id, String first_name); //Системата подканва служителя да въведе своето id и име. При неуспешен вход, потребителят отново се приканва да въведе своите данни до успешно въведена комбинация.// четем данните от employee.CSV и сравняваме дали има служител с такова employee_id и first_name.
+
+клас Product
+- - product_id,
+- - name,
+- - price,
+- - quantity,
+- - color,
+- - expires_in
+конструктори
+гетъри/сетъри
+методи
+class FoodProduct extends Product /по условие пише: Важно е да се отбележи, че различните категории продукти имат различни характеристики и структура./ Класовете наследници могат да имат допълнителна характеристики.
+class DrinksProduct extends Product
+class SanitaryProduct extends Product
+class MakeUpProduct extends Product
+class OthersProduct extends Product
+
+клас Store
+- - List<Product> products
+- - List<Product> shoppingCart
+- - List<Employee> employees
+методи
+- - методи за записване на продуктите - в името да има timestamp (точното време на записване на документа)
+- - метод за зареждане на продуктите
+– Методи на клиент
+–void printAvailableProducts()
+–void searchProductsByCategory(String category)
+–void searchProductsByName(String name)
+–void addToShoppingCart(int productId, int quantity)
+–double calculateTotalPrice()
+–void checkout() - изчиства потребителската количка и записва данните от покупката в timestamp .CSV файл - нещо като касова бележка за потребителя.
+– Методи на служител
+– void printAllProducts()
+–  void sortProductsByName()
+— void sortProductsByPrice()
+– void sortProductsByExpirationDate()
+– void printProductById(int productId)
+— void printProductByName(String productName)
+— void printProductsByPriceGreaterThan(double price)
+–void printProductsByPriceLessThan(double price)
+– void printProductsByQuantityGreaterThanOrEqual(int quantity)
+– void printProductsByQuantityLessThan(int quantity)
+– Product createProduct(int product_id, String name, double price, int quantity, String type, String color, String expires_in) - може да се добави валидация на данните.
+–void addProduct(Product product)
+– void changeProductPriceById(int productId, double newPrice)
+– void changeProductQuantityById(int productId, int newQuantity)
+–void changeProductNameById(int productId, String newName)
+– void deleteProductById(int productId)
+–void sortEmployeesByName()
+–void sortEmployeesBySalary()
+–
+
+
+клас Main
+методи
+- - void main()
+- - логика за вход като потребител /Информация за клиентите не се съхранява./ или служител - клас Employee -> void login() - успешен/неуспешен вход - потребителя се подканва - while(true) -> предлагам след успешен вход да се насочи към някакъв клас, който ще отговаря за визуализация.
+- - - Меню за избор
+—--- Използват се методите разписани в клас Store за потребител и служител
