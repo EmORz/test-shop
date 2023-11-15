@@ -90,6 +90,7 @@ public class Main {
                 isHasEmployee=true;
                 employee.login(enterId, enterFirstName);
                 while (!exitRequested){
+
                     System.out.println("1. Принтиране на всички продукти");
                     System.out.println("2. Принтиране на всички продукти, сортирани по: име;цена;срок на годност");
                     System.out.println("4. Принтиране на определен продукт (по id)");
