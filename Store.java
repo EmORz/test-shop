@@ -84,7 +84,16 @@ public class Store {
     public void changeProductNameById() {
 
         System.out.println("Въведете ID на продукта: ");
-        int productId = scanner.nextInt();
+        int productId;
+        while (true) {
+            if (scanner.hasNextInt()) {
+                productId = scanner.nextInt();
+                break;
+            } else {
+                System.out.println("Невалидно ID. Моля, въведете валидно число.");
+                scanner.next(); // Изчистване на буфера от грешни данни
+            }
+        }
         scanner.nextLine();
         System.out.println("Въедете ново име на продукта: ");
         String newName = scanner.nextLine();
@@ -101,9 +110,27 @@ public class Store {
 
     public void changeProductQuantityById() {
         System.out.println("Въведете ID на продукта: ");
-        int productId = scanner.nextInt();
+        int productId ;
+        while (true) {
+            if (scanner.hasNextInt()) {
+                productId = scanner.nextInt();
+                break;
+            } else {
+                System.out.println("Невалидно ID. Моля, въведете валидно число.");
+                scanner.next(); // Изчистване на буфера от грешни данни
+            }
+        }
         System.out.println("Въедете ново количество на продукта: ");
-        int newQuantity = scanner.nextInt();
+        int newQuantity ;
+        while (true) {
+            if (scanner.hasNextInt()) {
+                newQuantity = scanner.nextInt();
+                break;
+            } else {
+                System.out.println("Невалидно количество. Моля, въведете валидно число.");
+                scanner.next(); // Изчистване на буфера от грешни данни
+            }
+        }
         for (Product product : products) {
             if (product.getProduct_id() == productId) {
                 product.setQuantity(newQuantity);
@@ -117,7 +144,16 @@ public class Store {
 
     public void changeProductPriceById() {
         System.out.println("Въведете ID на продукта: ");
-        int productId = scanner.nextInt();
+        int productId ;
+        while (true) {
+            if (scanner.hasNextInt()) {
+                productId = scanner.nextInt();
+                break;
+            } else {
+                System.out.println("Невалидно ID. Моля, въведете валидно число за ID.");
+                scanner.next(); // Изчистване на буфера от грешни данни
+            }
+        }
         System.out.println("Въедете нова цена на продукта: ");
 
         double newPrice;
@@ -143,7 +179,16 @@ public class Store {
 
     public void printAllProductsByQuantityLower() {
         System.out.print("Въведи количество за продукти: ");
-        int quantity = scanner.nextInt();
+        int quantity;
+        while (true) {
+            if (scanner.hasNextInt()) {
+                quantity = scanner.nextInt();
+                break;
+            } else {
+                System.out.println("Невалидно количество. Моля, въведете валидно число.");
+                scanner.next(); // Изчистване на буфера от грешни данни
+            }
+        }
 
         System.out.println("Продукти с количество по-малко от " + quantity + ":");
         for (Product product:products
@@ -165,8 +210,16 @@ public class Store {
     }
     public void printAllProductsByQuantityGreaterThanOrEqual() {
         System.out.print("Въведи количество за продукти: ");
-        int quantity = scanner.nextInt();
-
+        int quantity;
+        while (true) {
+            if (scanner.hasNextInt()) {
+                quantity = scanner.nextInt();
+                break;
+            } else {
+                System.out.println("Невалидно количество. Моля, въведете валидно число.");
+                scanner.next(); // Изчистване на буфера от грешни данни
+            }
+        }
         System.out.println("Продукти с количество по-високо или равно на " + quantity + ":");
         for (Product product:products
              ) {
@@ -188,8 +241,16 @@ public class Store {
 
     public void printProductsByPriceGreaterThanOrEqual() {
         System.out.print("Въведи цена за търсене на продукти: ");
-        double price = scanner.nextDouble();
-
+        double price;
+        while (true) {
+            if (scanner.hasNextDouble()) {
+                price = scanner.nextDouble();
+                break;
+            } else {
+                System.out.println("Невалидна цена. Моля, въведете валидно число.");
+                scanner.next(); // Изчистване на буфера от грешни данни
+            }
+        }
         System.out.println("Продукти с цена по-висока или равна на " + price + ":");
 
         for (Product product : products) {
@@ -211,8 +272,16 @@ public class Store {
     }
     public void printProductsByPriceLower() {
         System.out.print("Въведи цена за търсене на продукти: ");
-        double price = scanner.nextDouble();
-
+        double price = ;
+        while (true) {
+            if (scanner.hasNextDouble()) {
+                price = scanner.nextDouble();
+                break;
+            } else {
+                System.out.println("Невалидна цена. Моля, въведете валидно число.");
+                scanner.next(); // Изчистване на буфера от грешни данни
+            }
+        }
         System.out.println("Продукти с цена по-ниска от " + price + ":");
 
         for (Product product : products) {
@@ -235,7 +304,16 @@ public class Store {
 
     public List<Product> findProductById(){
         System.out.print("Въведи Id на продукт: ");
-        int product_id = scanner.nextInt();
+        int product_id ;
+        while (true) {
+            if (scanner.hasNextInt()) {
+                product_id = scanner.nextInt();
+                break;
+            } else {
+                System.out.println("Невалиднo Id. Моля, въведете валидно число.");
+                scanner.next(); // Изчистване на буфера от грешни данни
+            }
+        }
         List<Product> findProducts = new ArrayList<>();
 
         for (Product product:products
@@ -325,8 +403,16 @@ public class Store {
     public void deleteProductById(){
         List<Product> productForRemove = new ArrayList<>();
         System.out.print("Въведи ID на продукт за изтриване: ");
-        int product_id = scanner.nextInt();
-
+        int product_id ;
+        while (true) {
+            if (scanner.hasNextInt()) {
+                product_id = scanner.nextInt();
+                break;
+            } else {
+                System.out.println("Невалиднo Id. Моля, въведете валидно число.");
+                scanner.next(); // Изчистване на буфера от грешни данни
+            }
+        }
         boolean isHasProductForDelete = false;
         for (Product product:products
              ) {
@@ -429,7 +515,16 @@ public class Store {
         System.out.println("Добавяне на име на продукта: ");
         String name = scanner.nextLine();
         System.out.println("Добавяне на количество на продукта: ");
-        int quantity = scanner.nextInt();
+        int quantity;
+        while (true) {
+            if (scanner.hasNextInt()) {
+                quantity = scanner.nextInt();
+                break;
+            } else {
+                System.out.println("Невалиднo Id. Моля, въведете валидно число.");
+                scanner.next(); // Изчистване на буфера от грешни данни
+            }
+        }
         System.out.println("Добавяне на цена на продукта: ");
         double price;
         while (true){
