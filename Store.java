@@ -272,7 +272,7 @@ public class Store {
     }
     public void printProductsByPriceLower() {
         System.out.print("Въведи цена за търсене на продукти: ");
-        double price = ;
+        double price ;
         while (true) {
             if (scanner.hasNextDouble()) {
                 price = scanner.nextDouble();
