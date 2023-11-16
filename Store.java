@@ -50,35 +50,25 @@ public class Store {
         this.employees = new ArrayList<>();
     }
 
-    public Employee loginEmployee(int employee_id, String firstName){
-
-        for (Employee employee:employees
-             ) {
-            if (employee.getEmployee_id() == employee_id
-            && employee.getFirst_name().equalsIgnoreCase(firstName)) {
-                employee.login(employee_id, firstName);
-                break;
-            }
-        }
-
-        return null;
-    }
     public void printAllProducts(){
         for (Product product:products
              ) {
-            System.out.println("*".repeat(10));
-
-            System.out.println("ID на продукта: "+product.getProduct_id());
-            System.out.println("Име на продукта: "+product.getName());
-            System.out.println("Количество на продукта: "+product.getQuantity());
-            System.out.println("Цена на продукта: "+product.getPrice());
-            System.out.println("Цвят на продукта: "+product.getColor());
-            System.out.println("Срок на годност на продукта: "+product.getExpires_in());
-
-            System.out.println("*".repeat(10));
-            System.out.println("-".repeat(10));
-
+            printHelper(product);
         }
+    }
+
+    private static void printHelper(Product product) {
+        System.out.println("*".repeat(10));
+
+        System.out.println("ID на продукта: "+ product.getProduct_id());
+        System.out.println("Име на продукта: "+ product.getName());
+        System.out.println("Количество на продукта: "+ product.getQuantity());
+        System.out.println("Цена на продукта: "+ product.getPrice());
+        System.out.println("Цвят на продукта: "+ product.getColor());
+        System.out.println("Срок на годност на продукта: "+ product.getExpires_in());
+
+        System.out.println("*".repeat(10));
+        System.out.println("-".repeat(10));
     }
 
     public void changeProductNameById() {
@@ -189,22 +179,11 @@ public class Store {
                 scanner.next(); // Изчистване на буфера от грешни данни
             }
         }
-
         System.out.println("Продукти с количество по-малко от " + quantity + ":");
         for (Product product:products
         ) {
             if (product.getQuantity() < quantity) {
-                System.out.println("*".repeat(10));
-
-                System.out.println("ID на продукта: "+product.getProduct_id());
-                System.out.println("Име на продукта: "+product.getName());
-                System.out.println("Количество на продукта: "+product.getQuantity());
-                System.out.println("Цена на продукта: "+product.getPrice());
-                System.out.println("Цвят на продукта: "+product.getColor());
-                System.out.println("Срок на годност на продукта: "+product.getExpires_in());
-
-                System.out.println("*".repeat(10));
-                System.out.println("-".repeat(10));
+                printHelper(product);
             }
         }
     }
@@ -224,17 +203,7 @@ public class Store {
         for (Product product:products
              ) {
             if (product.getQuantity() >= quantity) {
-                System.out.println("*".repeat(10));
-
-                System.out.println("ID на продукта: "+product.getProduct_id());
-                System.out.println("Име на продукта: "+product.getName());
-                System.out.println("Количество на продукта: "+product.getQuantity());
-                System.out.println("Цена на продукта: "+product.getPrice());
-                System.out.println("Цвят на продукта: "+product.getColor());
-                System.out.println("Срок на годност на продукта: "+product.getExpires_in());
-
-                System.out.println("*".repeat(10));
-                System.out.println("-".repeat(10));
+                printHelper(product);
             }
         }
     }
@@ -255,18 +224,7 @@ public class Store {
 
         for (Product product : products) {
             if (product.getPrice() >= price) {
-
-                System.out.println("*".repeat(10));
-
-                System.out.println("ID на продукта: "+product.getProduct_id());
-                System.out.println("Име на продукта: "+product.getName());
-                System.out.println("Количество на продукта: "+product.getQuantity());
-                System.out.println("Цена на продукта: "+product.getPrice());
-                System.out.println("Цвят на продукта: "+product.getColor());
-                System.out.println("Срок на годност на продукта: "+product.getExpires_in());
-
-                System.out.println("*".repeat(10));
-                System.out.println("-".repeat(10));
+                printHelper(product);
             }
         }
     }
@@ -286,18 +244,7 @@ public class Store {
 
         for (Product product : products) {
             if (product.getPrice() < price) {
-
-                System.out.println("*".repeat(10));
-
-                System.out.println("ID на продукта: "+product.getProduct_id());
-                System.out.println("Име на продукта: "+product.getName());
-                System.out.println("Количество на продукта: "+product.getQuantity());
-                System.out.println("Цена на продукта: "+product.getPrice());
-                System.out.println("Цвят на продукта: "+product.getColor());
-                System.out.println("Срок на годност на продукта: "+product.getExpires_in());
-
-                System.out.println("*".repeat(10));
-                System.out.println("-".repeat(10));
+                printHelper(product);
             }
         }
     }
@@ -327,17 +274,7 @@ public class Store {
             for (Product product:findProducts
                  ) {
                 System.out.println("Намерени са "+findProducts.size()+" бр. продукти.");
-                System.out.println("*".repeat(10));
-
-                System.out.println("ID на продукта: "+product.getProduct_id());
-                System.out.println("Име на продукта: "+product.getName());
-                System.out.println("Количество на продукта: "+product.getQuantity());
-                System.out.println("Цена на продукта: "+product.getPrice());
-                System.out.println("Цвят на продукта: "+product.getColor());
-                System.out.println("Срок на годност на продукта: "+product.getExpires_in());
-
-                System.out.println("*".repeat(10));
-                System.out.println("-".repeat(10));
+                printHelper(product);
             }
         }else {
             System.out.println("Продукт с ID "+product_id+" не е намерен!");
@@ -362,17 +299,7 @@ public class Store {
             for (Product product:findProducts
             ) {
                 System.out.println("Намерени са "+findProducts.size()+" бр. продукти.");
-                System.out.println("*".repeat(10));
-
-                System.out.println("ID на продукта: "+product.getProduct_id());
-                System.out.println("Име на продукта: "+product.getName());
-                System.out.println("Количество на продукта: "+product.getQuantity());
-                System.out.println("Цена на продукта: "+product.getPrice());
-                System.out.println("Цвят на продукта: "+product.getColor());
-                System.out.println("Срок на годност на продукта: "+product.getExpires_in());
-
-                System.out.println("*".repeat(10));
-                System.out.println("-".repeat(10));
+                printHelper(product);
             }
         }else {
             System.out.println("Продукт с име "+product_name+" не е намерен!");
@@ -609,8 +536,26 @@ public class Store {
     }
 
     public void printProductsByCategory(){
-        System.out.println("Въведете категория на продукт: ");
-        String category = scanner.next();
+        System.out.println("Въведете категория на продукт: food, drinks, sanitary, others, makeup");
+        String category;
+
+        while (true){
+
+            if (scanner.hasNext()) {
+                category = scanner.next();
+                if (category.equalsIgnoreCase("food")||
+                        category.equalsIgnoreCase("drinks")||
+                category.equalsIgnoreCase("sanitary")||
+                category.equalsIgnoreCase("others")||
+                category.equalsIgnoreCase("makeup")) {
+                    break;
+                }else {
+                    System.out.println("Невалидна категория на продукт. Опитайте отново!");
+                }
+            }
+        }
+
+
         for (Product product:products
              ) {
             if (product.getType().equalsIgnoreCase(category)) {
@@ -726,7 +671,7 @@ public class Store {
                                 product=new OthersProduct(product_id,name,quantity, price,type, color, expires_in);
                                 break;
                             default:
-                                System.out.println("невалиден 1 тип продукт!");
+                                System.out.println("невалиден тип продукт!");
                                 break;
                         }
                         products.add(product);
