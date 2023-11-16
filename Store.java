@@ -85,10 +85,23 @@ public class Store {
             }
         }
         scanner.nextLine();
-        System.out.println("Въедете ново име на продукта: ");
-        String newName = scanner.nextLine();
+        String newName;
         for (Product product : products) {
             if (product.getProduct_id() == productId) {
+                System.out.println("Текущо име на продукт с ID " + productId + ": " + product.getName());
+                System.out.println("Въведете ново име на продукта: ");
+
+                while (true){
+                    if (scanner.hasNextLine()) {
+                        newName = scanner.nextLine();
+                        if (newName.length()>=3) {
+                            break;
+                        }else {
+                            System.out.println("Наименованието на продукта трябва да е поне 3 символа.");
+                            scanner.nextLine();
+                        }
+                    }
+                }
                 product.setName(newName);
                 addProduct(product);
                 System.out.println("Името на продукт с ID " + productId + " е променено на " + newName);
@@ -110,19 +123,24 @@ public class Store {
                 scanner.next(); // Изчистване на буфера от грешни данни
             }
         }
-        System.out.println("Въедете ново количество на продукта: ");
-        int newQuantity ;
-        while (true) {
-            if (scanner.hasNextInt()) {
-                newQuantity = scanner.nextInt();
-                break;
-            } else {
-                System.out.println("Невалидно количество. Моля, въведете валидно число.");
-                scanner.next(); // Изчистване на буфера от грешни данни
-            }
-        }
+
+        int newQuantity;
+
         for (Product product : products) {
             if (product.getProduct_id() == productId) {
+                System.out.println("Текущо количество на продукт с ID " + productId + ": " + product.getQuantity());
+                System.out.println("Въведете ново количество на продукта: ");
+                while (true) {
+                    if (scanner.hasNextInt()) {
+                        newQuantity = scanner.nextInt();
+                        if (newQuantity >0) {
+                            break;
+                        }else {
+                            System.out.println("Невалидно количество. Моля, въведете валидно число, по-голямо от нула.");
+                            scanner.nextLine(); // Изчистване на буфера от грешни данни
+                        }
+                    }
+                }
                 product.setQuantity(newQuantity);
                 addProduct(product);
                 System.out.println("Количествo на продукт с ID " + productId + " е променено на " + newQuantity);
@@ -144,20 +162,21 @@ public class Store {
                 scanner.next(); // Изчистване на буфера от грешни данни
             }
         }
-        System.out.println("Въедете нова цена на продукта: ");
-
         double newPrice;
-        while (true) {
-            if (scanner.hasNextDouble()) {
-                newPrice = scanner.nextDouble();
-                break;
-            } else {
-                System.out.println("Невалидна цена. Моля, въведете валидно число за цената.");
-                scanner.next(); // Изчистване на буфера от грешни данни
-            }
-        }
+
         for (Product product : products) {
             if (product.getProduct_id() == productId) {
+                System.out.println("Текуща цена на продукта с ID " + productId + ": " + product.getPrice());
+                System.out.println("Въведете нова цена на продукта: ");
+                while (true) {
+                    if (scanner.hasNextDouble()) {
+                        newPrice = scanner.nextDouble();
+                        break;
+                    } else {
+                        System.out.println("Невалидна цена. Моля, въведете валидно число за цената.");
+                        scanner.next(); // Изчистване на буфера от грешни данни
+                    }
+                }
                 product.setPrice(newPrice);
                 addProduct(product);
                 System.out.println("Цената на продукт с ID " + productId + " е променена на " + newPrice);
