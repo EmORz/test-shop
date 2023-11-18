@@ -1,19 +1,14 @@
 import java.text.ParseException;
 import java.util.List;
 import java.util.Scanner;
-//public Product createProduct (int product_id, String name, int quantity, double price, String color, String expires_in){
-//        Product product = new Product(product_id,name,quantity, price, color, expires_in);
-//        addProduct(product);
-//        return product;
-//        }
-//3,lipstick,6.80,15,makeup,red,04-02-2025
-//        4,dog leash,10.30,6,others,blue,
+
 public class Main {
     private static   Store store = new Store();
 //    private static User user = new User();
     private static String employeeFileName = "employee.CSV";
     private static List<Employee> employeeData = Store.readEmployeeFromCSV(employeeFileName);
     private static boolean exitRequested = false;
+    private static boolean isMenuForEmployee = false;
     private static Scanner scanner = new Scanner(System.in);
     public static void main(String[] args) throws ParseException {
 //        В системата ще има два вида потребители - служители и обикновени клиенти.
@@ -58,9 +53,9 @@ public class Main {
         String enterUserName = scanner.next();
 //        user.login(0, enterUserName);
         while (!exitRequested){
-            System.out.println("1. Команда");
-            System.out.println("2. Команда");
-            System.out.println("3. Изход");
+            isMenuForEmployee = false;
+
+            printMenu(isMenuForEmployee);
 
             int customerChoice = getUserChoice();
 
@@ -90,27 +85,8 @@ public class Main {
                 isHasEmployee=true;
                 employee.login(enterId, enterFirstName);
                 while (!exitRequested){
-
-                    System.out.println("1. Принтиране на всички продукти");
-                    System.out.println("2. Принтиране на всички продукти, сортирани по: име;цена;срок на годност");
-                    System.out.println("4. Принтиране на определен продукт (по id)");
-                    System.out.println("5. Принтиране на определен продукт (по име)");
-                    System.out.println("6. Принтиране на всички продукти с цена, по-висока или равна на зададена от потребителя цена");
-                    System.out.println("7. Принтиране на всички продукти с цена, по-ниска от зададена от потребителя цена");
-                    System.out.println("8. Принтиране на всички продукти с количество, по-голямо или равно на зададено от потребителя количество");
-                    System.out.println("9. Принтиране на всички продукти с количество, по-малко от зададено от потребителя количество");
-                    System.out.println("10. Добавяне на продукт");
-                    System.out.println("11. Промяна на цената на продукт (по id)");
-                    System.out.println("12. Промяна на количеството на продукт (по id)");
-                    System.out.println("13. Промяна на името на продукт (по id)");
-                    System.out.println("14. Изтриване на продукт (по id)");
-                    System.out.println("15. Сортиране на служителите по:" +"име");
-                    System.out.println("16. Сортиране на служителите по:" +"заплата");
-                    System.out.println("17. Принтиране на всички продукти, сортирани по:" +" име");
-                    System.out.println("18. Принтиране на всички продукти, сортирани по:" +" цена");
-                    System.out.println("19. Принтиране на всички продукти, сортирани по:" +" срок на годност");
-                    System.out.println("20. Принтиране на всички продукти по категория");
-                    System.out.println("3. Изход");
+                    isMenuForEmployee = true;
+                    printMenu(isMenuForEmployee);
 
                     int employeeChoice = getUserChoice();
 
@@ -145,6 +121,37 @@ public class Main {
             System.out.println("Няма служител с такива данни!");
 
         }
+    }
+
+    private static void printMenu(boolean isMenuForEmployee) {
+
+        if (isMenuForEmployee==true) {
+            System.out.println("1. Принтиране на всички продукти");
+            System.out.println("2. Принтиране на всички продукти, сортирани по: име;цена;срок на годност");
+            System.out.println("4. Принтиране на определен продукт (по id)");
+            System.out.println("5. Принтиране на определен продукт (по име)");
+            System.out.println("6. Принтиране на всички продукти с цена, по-висока или равна на зададена от потребителя цена");
+            System.out.println("7. Принтиране на всички продукти с цена, по-ниска от зададена от потребителя цена");
+            System.out.println("8. Принтиране на всички продукти с количество, по-голямо или равно на зададено от потребителя количество");
+            System.out.println("9. Принтиране на всички продукти с количество, по-малко от зададено от потребителя количество");
+            System.out.println("10. Добавяне на продукт");
+            System.out.println("11. Промяна на цената на продукт (по id)");
+            System.out.println("12. Промяна на количеството на продукт (по id)");
+            System.out.println("13. Промяна на името на продукт (по id)");
+            System.out.println("14. Изтриване на продукт (по id)");
+            System.out.println("15. Сортиране на служителите по:" +"име");
+            System.out.println("16. Сортиране на служителите по:" +"заплата");
+            System.out.println("17. Принтиране на всички продукти, сортирани по:" +" име");
+            System.out.println("18. Принтиране на всички продукти, сортирани по:" +" цена");
+            System.out.println("19. Принтиране на всички продукти, сортирани по:" +" срок на годност");
+            System.out.println("20. Принтиране на всички продукти по категория");
+            System.out.println("3. Изход");
+        }else if (isMenuForEmployee == false) {
+            System.out.println("1. Команда");
+            System.out.println("2. Команда");
+            System.out.println("3. Изход");
+        }
+
     }
 
     private static int getUserChoice() {
