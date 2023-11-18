@@ -1,14 +1,19 @@
 import java.time.LocalDate;
 
 public class FoodProduct extends Product{
-    public FoodProduct(int product_id, String name, int quantity, double price,String type, String color, LocalDate expires_in) {
-        super(product_id, name, quantity, price,type, color, expires_in);
 
+    public FoodProduct(int product_id, String name, int quantity, double price, ProductCategory category, String color, LocalDate expires_in) {
+        super(product_id, name, quantity, price, category, color, expires_in);
     }
 
     @Override
-    public String getType() {
-        return super.getType();
+    public ProductCategory getCategory() {
+        return super.getCategory();
+    }
+
+    @Override
+    public void setCategory(ProductCategory category) {
+        super.setCategory(category);
     }
 
     @Override
@@ -58,6 +63,6 @@ public class FoodProduct extends Product{
 
     public String toString() {
         return String.format("***\nFoodProduct{\nid=%d\nname=%s\nquantity=%d\n" +
-                "price=%.2f\ntype=%s\nexpires date=%s\n}***", getProduct_id(), getName(),getQuantity(),getPrice(), getType(), getExpires_in());
+                "price=%.2f\ntype=%s\nexpires date=%s\n}***", getProduct_id(), getName(),getQuantity(),getPrice(), getCategory(), getExpires_in());
     }
 }

@@ -398,13 +398,13 @@ public class Store {
         String fileName = "products_" + timestamp.format(formatter) + ".CSV";
 
         try (FileWriter writer = new FileWriter(fileName)){
-            writer.write("product_id;name;price;quantity;type;color;expires_in\n");
+            writer.write("product_id;name;price;quantity;category;color;expires_in\n");
 
             for (Product product:products
                  ) {
                 writer.write(String.format("%d;%s;%.2f;%d;%s;%s;%s\n",
                         product.getProduct_id(), product.getName(),
-                        product.getPrice(), product.getQuantity(),product.getType(),
+                        product.getPrice(), product.getQuantity(),product.getCategory(),
                         product.getColor(), product.getExpires_in()));
             }
 
@@ -483,8 +483,21 @@ public class Store {
             }
         }
 
-        System.out.println("Добавяне вид на продукта: ");
-        String type = scanner.nextLine();
+        scanner.nextLine();
+        System.out.println("Добавяне вид/категория на продукта: food, drinks, sanitary, others, makeup");
+        String type = scanner.nextLine().toUpperCase();
+        ProductCategory category=null ;
+        Product product= new Product();
+        while (true){
+            try {
+                category = ProductCategory.valueOf(type.toUpperCase());
+                product.setCategory(category);
+                break;
+            } catch (IllegalArgumentException e) {
+                System.out.println("Невалидна категория на продукт.");
+            }
+        }
+
         System.out.println("Добавяне на цвят на продукта: ");
         String color = scanner.nextLine();
         System.out.println("Добавяне на срок на годност на продукта в дни: ");
@@ -492,7 +505,7 @@ public class Store {
         int additionalDays = scanner.nextInt();
 
         LocalDate expires_in = currentDate.plusDays(additionalDays);
-        Product product = new Product(product_id,name,quantity, price,type, color, expires_in);
+         product = new Product(product_id,name,quantity, price,category, color, expires_in);
         addProduct(product);
         return product;
     }
@@ -556,19 +569,17 @@ public class Store {
 
     public void printProductsByCategory(){
         System.out.println("Въведете категория на продукт: food, drinks, sanitary, others, makeup");
-        String category;
-
+        String categoryInput;
+        ProductCategory category = null;
         while (true){
 
             if (scanner.hasNext()) {
-                category = scanner.next();
-                if (category.equalsIgnoreCase("food")||
-                        category.equalsIgnoreCase("drinks")||
-                category.equalsIgnoreCase("sanitary")||
-                category.equalsIgnoreCase("others")||
-                category.equalsIgnoreCase("makeup")) {
+                categoryInput = scanner.next();
+
+                try {
+                    category = ProductCategory.valueOf(categoryInput.toUpperCase());
                     break;
-                }else {
+                }catch (IllegalArgumentException e){
                     System.out.println("Невалидна категория на продукт. Опитайте отново!");
                 }
             }
@@ -577,7 +588,7 @@ public class Store {
 
         for (Product product:products
              ) {
-            if (product.getType().equalsIgnoreCase(category)) {
+            if (product.getCategory()==category) {
                 System.out.println(product);
             }
         }
@@ -654,6 +665,7 @@ public class Store {
                         double price =numberFormat.parse(data[2]).doubleValue()/100;
                         int quantity = Integer.parseInt(data[3]);
                         String type = data[4];
+                        ProductCategory category = chooseCategory(type);
 
                         String color = "";
                         String expires_inStr = "01-01-1000";
@@ -671,28 +683,8 @@ public class Store {
                         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
                         LocalDate expires_in = LocalDate.parse(expires_inStr, formatter);
 
-                        Product product = null;
+                        Product product = additionProduct(product_id,name,quantity, price,category, color, expires_in);
 
-                        switch (type.toLowerCase()){
-                            case "food":
-                                product=new FoodProduct(product_id,name,quantity, price,type, color, expires_in);
-                            break;
-                            case "drinks":
-                                product=new DrinksProduct(product_id,name,quantity, price,type, color, expires_in);
-                                break;
-                            case "sanitary":
-                                product=new SanitaryProduct(product_id,name,quantity, price,type, color, expires_in);
-                                break;
-                            case "makeup":
-                                product=new MakeUpProduct(product_id,name,quantity, price,type, color, expires_in);
-                                break;
-                            case "others":
-                                product=new OthersProduct(product_id,name,quantity, price,type, color, expires_in);
-                                break;
-                            default:
-                                System.out.println("невалиден тип продукт!");
-                                break;
-                        }
                         products.add(product);
                     }
                 }
@@ -703,6 +695,43 @@ public class Store {
             System.out.println("Няма налични файлове с продукти.");
         }
         return products;
+    }
+
+    private static Product additionProduct(int productId, String name, int quantity,
+                                         double price, ProductCategory category,
+                                         String color, LocalDate expiresIn) {
+
+
+        switch (category){
+            case FOOD:
+                return new FoodProduct(productId,name,quantity, price,category, color, expiresIn);
+            case DRINKS:
+                return new DrinksProduct(productId,name,quantity, price,category, color, expiresIn);
+            case SANTARY:
+                return new SanitaryProduct(productId,name,quantity, price,category, color, expiresIn);
+            case MAKEUP:
+                return new MakeUpProduct(productId,name,quantity, price,category, color, expiresIn);
+            case OTHERS:
+                return new OthersProduct(productId,name,quantity, price,category, color, expiresIn);
+            default:
+                System.out.println("невалиден тип продукт!");
+                return null;
+        }
+
+    }
+
+    private static ProductCategory chooseCategory(String type) {
+
+        switch (type.toLowerCase()){
+            case "food": return ProductCategory.FOOD;
+            case "drinks":  return ProductCategory.DRINKS;
+            case "sanitary": return ProductCategory.SANTARY;
+            case "makeup": return ProductCategory.MAKEUP;
+            case "others": return ProductCategory.OTHERS;
+            default:
+                System.out.println("невалиден тип продукт!");
+                return null;
+        }
     }
 
     public static List<Product>getProducts(){
