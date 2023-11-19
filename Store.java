@@ -1,6 +1,6 @@
+import Validate.*;
+
 import java.io.*;
-import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.time.LocalDate;
@@ -74,34 +74,16 @@ public class Store {
     public void changeProductNameById() {
 
         System.out.println("Въведете ID на продукта: ");
-        int productId;
-        while (true) {
-            if (scanner.hasNextInt()) {
-                productId = scanner.nextInt();
-                break;
-            } else {
-                System.out.println("Невалидно ID. Моля, въведете валидно число.");
-                scanner.next(); // Изчистване на буфера от грешни данни
-            }
-        }
+        int productId = new IntegerValidator().validate(scanner, "ID");
+
         scanner.nextLine();
         String newName;
         for (Product product : products) {
             if (product.getProduct_id() == productId) {
                 System.out.println("Текущо име на продукт с ID " + productId + ": " + product.getName());
                 System.out.println("Въведете ново име на продукта: ");
+                newName = new StringValidator().validate(scanner,"ново име");
 
-                while (true){
-                    if (scanner.hasNextLine()) {
-                        newName = scanner.nextLine();
-                        if (newName.length()>=3) {
-                            break;
-                        }else {
-                            System.out.println("Наименованието на продукта трябва да е поне 3 символа.");
-                            scanner.nextLine();
-                        }
-                    }
-                }
                 product.setName(newName);
                 addProduct(product);
                 System.out.println("Името на продукт с ID " + productId + " е променено на " + newName);
@@ -113,16 +95,7 @@ public class Store {
 
     public void changeProductQuantityById() {
         System.out.println("Въведете ID на продукта: ");
-        int productId ;
-        while (true) {
-            if (scanner.hasNextInt()) {
-                productId = scanner.nextInt();
-                break;
-            } else {
-                System.out.println("Невалидно ID. Моля, въведете валидно число.");
-                scanner.next(); // Изчистване на буфера от грешни данни
-            }
-        }
+        int productId = new IntegerValidator().validate(scanner, "ID") ;
 
         int newQuantity;
 
@@ -130,17 +103,8 @@ public class Store {
             if (product.getProduct_id() == productId) {
                 System.out.println("Текущо количество на продукт с ID " + productId + ": " + product.getQuantity());
                 System.out.println("Въведете ново количество на продукта: ");
-                while (true) {
-                    if (scanner.hasNextInt()) {
-                        newQuantity = scanner.nextInt();
-                        if (newQuantity >0) {
-                            break;
-                        }else {
-                            System.out.println("Невалидно количество. Моля, въведете валидно число, по-голямо от нула.");
-                            scanner.nextLine(); // Изчистване на буфера от грешни данни
-                        }
-                    }
-                }
+                newQuantity = new PositiveIntegerValidator().validate(scanner,"количество");
+
                 product.setQuantity(newQuantity);
                 addProduct(product);
                 System.out.println("Количествo на продукт с ID " + productId + " е променено на " + newQuantity);
@@ -152,31 +116,16 @@ public class Store {
 
     public void changeProductPriceById() {
         System.out.println("Въведете ID на продукта: ");
-        int productId ;
-        while (true) {
-            if (scanner.hasNextInt()) {
-                productId = scanner.nextInt();
-                break;
-            } else {
-                System.out.println("Невалидно ID. Моля, въведете валидно число за ID.");
-                scanner.next(); // Изчистване на буфера от грешни данни
-            }
-        }
+        int productId = new IntegerValidator().validate(scanner, "ID") ;
+
         double newPrice;
 
         for (Product product : products) {
             if (product.getProduct_id() == productId) {
                 System.out.println("Текуща цена на продукта с ID " + productId + ": " + product.getPrice());
                 System.out.println("Въведете нова цена на продукта: ");
-                while (true) {
-                    if (scanner.hasNextDouble()) {
-                        newPrice = scanner.nextDouble();
-                        break;
-                    } else {
-                        System.out.println("Невалидна цена. Моля, въведете валидно число за цената.");
-                        scanner.next(); // Изчистване на буфера от грешни данни
-                    }
-                }
+                newPrice = new PositiveDoubleValidator().validate(scanner, "цена");
+
                 product.setPrice(newPrice);
                 addProduct(product);
                 System.out.println("Цената на продукт с ID " + productId + " е променена на " + newPrice);
@@ -188,16 +137,8 @@ public class Store {
 
     public void printAllProductsByQuantityLower() {
         System.out.print("Въведи количество за продукти: ");
-        int quantity;
-        while (true) {
-            if (scanner.hasNextInt()) {
-                quantity = scanner.nextInt();
-                break;
-            } else {
-                System.out.println("Невалидно количество. Моля, въведете валидно число.");
-                scanner.next(); // Изчистване на буфера от грешни данни
-            }
-        }
+        int quantity = new IntegerValidator().validate(scanner, "количество");
+
         System.out.println("Продукти с количество по-малко от " + quantity + ":");
         for (Product product:products
         ) {
@@ -208,16 +149,8 @@ public class Store {
     }
     public void printAllProductsByQuantityGreaterThanOrEqual() {
         System.out.print("Въведи количество за продукти: ");
-        int quantity;
-        while (true) {
-            if (scanner.hasNextInt()) {
-                quantity = scanner.nextInt();
-                break;
-            } else {
-                System.out.println("Невалидно количество. Моля, въведете валидно число.");
-                scanner.next(); // Изчистване на буфера от грешни данни
-            }
-        }
+        int quantity = new IntegerValidator().validate(scanner, "количество") ;
+
         System.out.println("Продукти с количество по-високо или равно на " + quantity + ":");
         for (Product product:products
              ) {
@@ -229,16 +162,8 @@ public class Store {
 
     public void printProductsByPriceGreaterThanOrEqual() {
         System.out.print("Въведи цена за търсене на продукти: ");
-        double price;
-        while (true) {
-            if (scanner.hasNextDouble()) {
-                price = scanner.nextDouble();
-                break;
-            } else {
-                System.out.println("Невалидна цена. Моля, въведете валидно число.");
-                scanner.next(); // Изчистване на буфера от грешни данни
-            }
-        }
+        double price = new DoubleValidator().validate(scanner, "цена");
+
         System.out.println("Продукти с цена по-висока или равна на " + price + ":");
 
         for (Product product : products) {
@@ -249,16 +174,8 @@ public class Store {
     }
     public void printProductsByPriceLower() {
         System.out.print("Въведи цена за търсене на продукти: ");
-        double price ;
-        while (true) {
-            if (scanner.hasNextDouble()) {
-                price = scanner.nextDouble();
-                break;
-            } else {
-                System.out.println("Невалидна цена. Моля, въведете валидно число.");
-                scanner.next(); // Изчистване на буфера от грешни данни
-            }
-        }
+        double price = new DoubleValidator().validate(scanner, "цена");
+
         System.out.println("Продукти с цена по-ниска от " + price + ":");
 
         for (Product product : products) {
@@ -270,16 +187,8 @@ public class Store {
 
     public List<Product> findProductById(){
         System.out.print("Въведи Id на продукт: ");
-        int product_id ;
-        while (true) {
-            if (scanner.hasNextInt()) {
-                product_id = scanner.nextInt();
-                break;
-            } else {
-                System.out.println("Невалиднo Id. Моля, въведете валидно число.");
-                scanner.next(); // Изчистване на буфера от грешни данни
-            }
-        }
+        int product_id = new IntegerValidator().validate(scanner, "Id") ;
+
         List<Product> findProducts = new ArrayList<>();
 
         for (Product product:products
@@ -349,16 +258,8 @@ public class Store {
     public void deleteProductById(){
         List<Product> productForRemove = new ArrayList<>();
         System.out.print("Въведи ID на продукт за изтриване: ");
-        int product_id ;
-        while (true) {
-            if (scanner.hasNextInt()) {
-                product_id = scanner.nextInt();
-                break;
-            } else {
-                System.out.println("Невалиднo Id. Моля, въведете валидно число.");
-                scanner.next(); // Изчистване на буфера от грешни данни
-            }
-        }
+        int product_id = new IntegerValidator().validate(scanner, "ID");
+
         boolean isHasProductForDelete = false;
         for (Product product:products
              ) {
@@ -395,7 +296,8 @@ public class Store {
     private void saveProductsToCSV(){
         LocalDateTime timestamp = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss");
-        String fileName = "products_" + timestamp.format(formatter) + ".CSV";
+        String folderPath = "ProductFolder";
+        String fileName = folderPath+File.separator+"products_" + timestamp.format(formatter) + ".CSV";
 
         try (FileWriter writer = new FileWriter(fileName)){
             writer.write("product_id;name;price;quantity;category;color;expires_in\n");
@@ -459,30 +361,11 @@ public class Store {
         int product_id = current_id+1;
         System.out.println("Id на продукта: "+product_id);
         System.out.println("Добавяне на име на продукта: ");
-        String name = scanner.nextLine();
+        String name = new StringValidator().validate(scanner, "name");
         System.out.println("Добавяне на количество на продукта: ");
-        int quantity;
-        while (true) {
-            if (scanner.hasNextInt()) {
-                quantity = scanner.nextInt();
-                break;
-            } else {
-                System.out.println("Невалиднo Id. Моля, въведете валидно число.");
-                scanner.next(); // Изчистване на буфера от грешни данни
-            }
-        }
+        int quantity = new PositiveIntegerValidator().validate(scanner, "количество");
         System.out.println("Добавяне на цена на продукта: ");
-        double price;
-        while (true){
-            if (scanner.hasNextDouble()) {
-                price = scanner.nextDouble();
-                break;
-            }else {
-                System.out.println("Невалидна цена. Моля, въведете валидно число за цената.");
-                scanner.next(); // Изчистване на буфера от грешни данни
-            }
-        }
-
+        double price = new DoubleValidator().validate(scanner, "цена");
         scanner.nextLine();
         System.out.println("Добавяне вид/категория на продукта: food, drinks, sanitary, others, makeup");
         String type = scanner.nextLine().toUpperCase();
@@ -494,15 +377,16 @@ public class Store {
                 product.setCategory(category);
                 break;
             } catch (IllegalArgumentException e) {
-                System.out.println("Невалидна категория на продукт.");
+                System.out.println("Невалидна категория на продукт./"+type.toUpperCase());
+                type = scanner.nextLine().toUpperCase();
             }
         }
 
         System.out.println("Добавяне на цвят на продукта: ");
-        String color = scanner.nextLine();
+        String color =  scanner.next();
         System.out.println("Добавяне на срок на годност на продукта в дни: ");
         LocalDate currentDate = LocalDate.now();
-        int additionalDays = scanner.nextInt();
+        int additionalDays = new PositiveIntegerValidator().validate(scanner, "дата");
 
         LocalDate expires_in = currentDate.plusDays(additionalDays);
          product = new Product(product_id,name,quantity, price,category, color, expires_in);
@@ -639,7 +523,7 @@ public class Store {
     }
 
     public static List<Product> readProductsFromCSV() throws ParseException {
-        File directory = new File(".");
+        File directory = new File("ProductFolder");
         File[] files = directory.listFiles((dir, name) -> name.startsWith("products_") && name.endsWith(".CSV"));
 
         if (files != null && files.length > 0) {
