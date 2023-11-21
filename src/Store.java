@@ -1,4 +1,8 @@
-import Validate.*;
+package src;
+
+import src.Entity.*;
+import src.Enums.ProductCategory;
+import src.Validate.*;
 
 import java.io.*;
 import java.text.NumberFormat;
@@ -29,8 +33,8 @@ import java.util.stream.Collectors;
 //        –void printProductsByPriceLessThan(double price)
 //        – void printProductsByQuantityGreaterThanOrEqual(int quantity)
 //        – void printProductsByQuantityLessThan(int quantity)
-//        – Product createProduct(int product_id, String name, double price, int quantity, String type, String color, String expires_in) - може да се добави валидация на данните.
-//        –void addProduct(Product product)
+//        – src.Entity.Product createProduct(int product_id, String name, double price, int quantity, String type, String color, String expires_in) - може да се добави валидация на данните.
+//        –void addProduct(src.Entity.Product product)
 //        – void changeProductPriceById(int productId, double newPrice)
 //        – void changeProductQuantityById(int productId, int newQuantity)
 //        –void changeProductNameById(int productId, String newName)
@@ -249,7 +253,7 @@ public class Store {
         if (employeeForDelete != null&& isHasEmployeeForDelete) {
             int id = employeeForDelete.get(0).getEmployee_id();
             employees.removeAll(employeeForDelete);
-            saveEmployeeToCSV("employee.CSV", employees);
+            saveEmployeeToCSV("src/employee.CSV", employees);
             System.out.println("Служител/и с ID "+id+" са изтрит!");
         }else {
             System.out.println("Служител с ID "+employee_id+" не е намерен!");
@@ -347,7 +351,7 @@ public class Store {
         }
         if (isHasEmployee) {
             employees.add(employee);
-            saveEmployeeToCSV("employee.CSV",employees);
+            saveEmployeeToCSV("src/employee.CSV",employees);
         }
     }
     public Product createProduct (){
@@ -496,7 +500,7 @@ public class Store {
     }
 
     public static List<Employee> readEmployeeFromCSV(String csvFilePath){
-//        List<Employee> employees = new ArrayList<>();
+//        List<src.Entity.Employee> employees = new ArrayList<>();
         try (BufferedReader br = new BufferedReader(new FileReader(csvFilePath))){
             String line;
             boolean firstLine = true;
@@ -523,7 +527,7 @@ public class Store {
     }
 
     public static List<Product> readProductsFromCSV() throws ParseException {
-        File directory = new File("ProductFolder");
+        File directory = new File("src/ProductFolder");
         File[] files = directory.listFiles((dir, name) -> name.startsWith("products_") && name.endsWith(".CSV"));
 
         if (files != null && files.length > 0) {

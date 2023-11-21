@@ -1,8 +1,12 @@
+package src.Entity;
+
+import src.Enums.ProductCategory;
+
 import java.time.LocalDate;
 
-public class MakeUpProduct extends Product{
+public class FoodProduct extends Product{
 
-    public MakeUpProduct(int product_id, String name, int quantity, double price, ProductCategory category, String color, LocalDate expires_in) {
+    public FoodProduct(int product_id, String name, int quantity, double price, ProductCategory category, String color, LocalDate expires_in) {
         super(product_id, name, quantity, price, category, color, expires_in);
     }
 
@@ -62,7 +66,7 @@ public class MakeUpProduct extends Product{
     }
 
     public String toString() {
-        return String.format("***\nMakeUpProduct{\nid=%d\nname=%s\nquantity=%d\n" +
+        return String.format("***\nsrc.Entity.FoodProduct{\nid=%d\nname=%s\nquantity=%d\n" +
                 "price=%.2f\ntype=%s\nexpires date=%s\n}***", getProduct_id(), getName(),getQuantity(),getPrice(), getCategory(), getExpires_in());
     }
 }

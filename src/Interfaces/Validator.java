@@ -1,4 +1,4 @@
-package Interfaces;
+package src.Interfaces;
 
 import java.util.Scanner;
 

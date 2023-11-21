@@ -1,7 +1,10 @@
+package src.Entity;
+
+import src.Store;
+
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -10,7 +13,7 @@ import java.util.List;
 //– userId;
 //        – String userName;
 //        - void login(int userId, String userName);
-public class User implements Interfaces.User {
+public class User implements src.Interfaces.User {
     private int userId;
     private String userName;
     private List<Product> shoppingCart;
@@ -27,19 +30,19 @@ public class User implements Interfaces.User {
     }
 
     public void printAvailableProducts(){
-        for (Product product:Store.getProducts()) {
+        for (Product product: Store.getProducts()) {
             System.out.println(product.toString());
         }
     }
 
 //    public void searchProductsByCategory(String category){
-//        for (Product product:Store.getProducts()) {
+//        for (src.Entity.Product product:Store.getProducts()) {
 //            System.out.println(product.toString());
 //        }
 //    }
 
     public void searchProductsByCategory(String category){
-        for (Product product:Store.getProducts()) {
+        for (Product product: Store.getProducts()) {
             if(product instanceof DrinksProduct && category.equalsIgnoreCase("Drinks")
             || product instanceof  FoodProduct && category.equalsIgnoreCase("Food")
             ||product instanceof  MakeUpProduct && category.equalsIgnoreCase("Makeup")
@@ -51,7 +54,7 @@ public class User implements Interfaces.User {
     }
 
     public void searchProductByName(String name){
-        for (Product product:Store.getProducts()) {
+        for (Product product: Store.getProducts()) {
             if (product.getName().equalsIgnoreCase(name)){
                 System.out.println(product.toString());
             }
@@ -67,7 +70,7 @@ public class User implements Interfaces.User {
             product.setQuantity(product.getQuantity()-quantity);
             System.out.println("Added"+quantity+" "+product.getName()+"to the shopping cart.");
         }else {
-            System.out.println("Product not found or insufficient quantity.");
+            System.out.println("src.Entity.Product not found or insufficient quantity.");
         }
     }
 
@@ -88,7 +91,7 @@ public class User implements Interfaces.User {
         String fileName="receipt_"+userId+"-"+timestamp+".csv";
 
         try(PrintWriter writer=new PrintWriter(new FileWriter(fileName))){
-            writer.println("Product ID, Name, Quantity, Price, Total Price");
+            writer.println("src.Entity.Product ID, Name, Quantity, Price, Total Price");
             for (Product cartItem:shoppingCart) {
                 writer.println(cartItem.getProduct_id()+", "+ cartItem.getName()+", "+cartItem.getQuantity()+", "+cartItem.getPrice()+", "+(cartItem.getPrice()*cartItem.getQuantity()));
             }
@@ -103,7 +106,7 @@ public class User implements Interfaces.User {
         }
     }
     private Product findProductById(int productId){
-        for (Product product:Store.getProducts()) {
+        for (Product product: Store.getProducts()) {
             if(product.getProduct_id()==productId){
                 return product;
             }

@@ -1,3 +1,7 @@
+package src.Entity;
+
+import src.Enums.ProductCategory;
+
 import java.time.LocalDate;
 
 public class OthersProduct extends Product{
@@ -64,7 +68,7 @@ public class OthersProduct extends Product{
     }
 
     public String toString() {
-        return String.format("***\nOthersProduct{\nid=%d\nname=%s\nquantity=%d\n" +
+        return String.format("***\nsrc.Entity.OthersProduct{\nid=%d\nname=%s\nquantity=%d\n" +
                 "price=%.2f\ntype=%s\nexpires date=%s\n}***", getProduct_id(), getName(),getQuantity(),getPrice(), getCategory(), getExpires_in());
     }
 }

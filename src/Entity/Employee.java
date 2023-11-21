@@ -1,5 +1,7 @@
-import Interfaces.User;
-//клас Employee implement Interfaces.User
+package src.Entity;
+
+import src.Interfaces.User;
+//клас src.Entity.Employee implement src.Interfaces.src.Entity.User
 //        - - employee_id,
 //        - - first_name,
 //        - - last_name,
