@@ -1,21 +1,22 @@
+package src;
+
+import src.Entity.Employee;
+
 import java.text.ParseException;
 import java.util.List;
 import java.util.Scanner;
 
 public class Main {
     private static   Store store = new Store();
-//    private static User user = new User();
-    private static String employeeFileName = "employee.CSV";
+//    private static src.Entity.User user = new src.Entity.User();
+    private static String employeeFileName = "src/employee.CSV";
     private static List<Employee> employeeData = Store.readEmployeeFromCSV(employeeFileName);
     private static boolean exitRequested = false;
     private static boolean isMenuForEmployee = false;
     private static Scanner scanner = new Scanner(System.in);
     public static void main(String[] args) throws ParseException {
-//        В системата ще има два вида потребители - служители и обикновени клиенти.
-//        При стартиране на програмата (след зареждане на данните, което се обяснява по-надолу в описанието на задачата)
-//        на потребителя се дава възможност да избере като какъв иска да я използва.
-//        Всеки служител има уникално employee_id. Всяка стока има уникално product_id.
-//        Информация за клиентите не се съхранява.
+
+//        new ShopApp().start();
 
         System.out.println("Въведете име на файл с продукти: ");
         String productsFileName = "product.CSV";

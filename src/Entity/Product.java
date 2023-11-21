@@ -1,6 +1,10 @@
+package src.Entity;
+
+import src.Enums.ProductCategory;
+
 import java.time.LocalDate;
 
-//клас Product
+//клас src.Entity.Product
 //        - - product_id,
 //        - - name,
 //        - - price,
@@ -16,7 +20,7 @@ public class Product {
     private String color;
     private LocalDate expires_in;
 
-    public Product(int product_id, String name, int quantity, double price,ProductCategory category, String color, LocalDate expires_in) {
+    public Product(int product_id, String name, int quantity, double price, ProductCategory category, String color, LocalDate expires_in) {
         this.product_id = product_id;
         this.name = name;
         this.quantity = quantity;

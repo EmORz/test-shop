@@ -1,6 +1,6 @@
-package Validate;
+package src.Validate;
 
-import Interfaces.Validator;
+import src.Interfaces.Validator;
 
 import java.util.Scanner;
 

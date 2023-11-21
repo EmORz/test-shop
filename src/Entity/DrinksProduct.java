@@ -1,7 +1,12 @@
+package src.Entity;
+
+import src.Enums.ProductCategory;
+
 import java.time.LocalDate;
 
-public class SanitaryProduct extends Product{
-    public SanitaryProduct(int product_id, String name, int quantity, double price, ProductCategory category, String color, LocalDate expires_in) {
+public class DrinksProduct extends Product{
+
+    public DrinksProduct(int product_id, String name, int quantity, double price, ProductCategory category, String color, LocalDate expires_in) {
         super(product_id, name, quantity, price, category, color, expires_in);
     }
 
@@ -14,6 +19,8 @@ public class SanitaryProduct extends Product{
     public void setCategory(ProductCategory category) {
         super.setCategory(category);
     }
+
+
 
     @Override
     public int getProduct_id() {
@@ -60,8 +67,7 @@ public class SanitaryProduct extends Product{
         super.setPrice(price);
     }
 
-    @Override
     public String toString() {
-        return String.format("***\nSanitaryProduct{\nid=%d\nname=%s\nquantity=%d\n" +
+        return String.format("***\nDrinksroduct{\nid=%d\nname=%s\nquantity=%d\n" +
                 "price=%.2f\ntype=%s\nexpires date=%s\n}***", getProduct_id(), getName(),getQuantity(),getPrice(), getCategory(), getExpires_in());
     }}
