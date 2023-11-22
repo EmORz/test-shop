@@ -17,6 +17,7 @@ public class User implements src.Interfaces.User {
     private int userId;
     private String userName;
     private List<Product> shoppingCart;
+    private Store store = new Store();
 
     public User(int userId, String userName) {
         this.userId = userId;
@@ -30,7 +31,7 @@ public class User implements src.Interfaces.User {
     }
 
     public void printAvailableProducts(){
-        for (Product product: Store.getProducts()) {
+        for (Product product: store.getProducts()) {
             System.out.println(product.toString());
         }
     }
@@ -42,7 +43,7 @@ public class User implements src.Interfaces.User {
 //    }
 
     public void searchProductsByCategory(String category){
-        for (Product product: Store.getProducts()) {
+        for (Product product: store.getProducts()) {
             if(product instanceof DrinksProduct && category.equalsIgnoreCase("Drinks")
             || product instanceof  FoodProduct && category.equalsIgnoreCase("Food")
             ||product instanceof  MakeUpProduct && category.equalsIgnoreCase("Makeup")
@@ -54,7 +55,7 @@ public class User implements src.Interfaces.User {
     }
 
     public void searchProductByName(String name){
-        for (Product product: Store.getProducts()) {
+        for (Product product: store.getProducts()) {
             if (product.getName().equalsIgnoreCase(name)){
                 System.out.println(product.toString());
             }
@@ -106,7 +107,7 @@ public class User implements src.Interfaces.User {
         }
     }
     private Product findProductById(int productId){
-        for (Product product: Store.getProducts()) {
+        for (Product product: store.getProducts()) {
             if(product.getProduct_id()==productId){
                 return product;
             }

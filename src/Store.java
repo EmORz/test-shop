@@ -44,35 +44,28 @@ import java.util.stream.Collectors;
 
 public class Store {
     private static Scanner scanner = new Scanner(System.in);
-    private static List<Product> products;
+    private List<Product> products;
     private List<Product> shoppingCart;
     private static List<Employee> employees;
+    private static Printer printer;
 
     public Store() {
-        this.products = new ArrayList<>();
+        this.printer = new Printer();
+        products = new ArrayList<>();
+        try {
+            this.products = readProductsFromCSV();
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
         this.shoppingCart = new ArrayList<>();
         this.employees = new ArrayList<>();
     }
 
     public void printAllProducts(){
         for (Product product:products
-             ) {
-            printHelper(product);
+        ) {
+            this.printer.printProductDetails(product);
         }
-    }
-
-    private static void printHelper(Product product) {
-        System.out.println("*".repeat(10));
-
-        System.out.println("ID на продукта: "+ product.getProduct_id());
-        System.out.println("Име на продукта: "+ product.getName());
-        System.out.println("Количество на продукта: "+ product.getQuantity());
-        System.out.println("Цена на продукта: "+ product.getPrice());
-        System.out.println("Цвят на продукта: "+ product.getColor());
-        System.out.println("Срок на годност на продукта: "+ product.getExpires_in());
-
-        System.out.println("*".repeat(10));
-        System.out.println("-".repeat(10));
     }
 
     public void changeProductNameById() {
@@ -147,7 +140,7 @@ public class Store {
         for (Product product:products
         ) {
             if (product.getQuantity() < quantity) {
-                printHelper(product);
+                this.printer.printProductDetails(product);
             }
         }
     }
@@ -159,7 +152,7 @@ public class Store {
         for (Product product:products
              ) {
             if (product.getQuantity() >= quantity) {
-                printHelper(product);
+                this.printer.printProductDetails(product);
             }
         }
     }
@@ -172,7 +165,7 @@ public class Store {
 
         for (Product product : products) {
             if (product.getPrice() >= price) {
-                printHelper(product);
+                this.printer.printProductDetails(product);
             }
         }
     }
@@ -184,7 +177,7 @@ public class Store {
 
         for (Product product : products) {
             if (product.getPrice() < price) {
-                printHelper(product);
+                this.printer.printProductDetails(product);
             }
         }
     }
@@ -206,7 +199,7 @@ public class Store {
             for (Product product:findProducts
                  ) {
                 System.out.println("Намерени са "+findProducts.size()+" бр. продукти.");
-                printHelper(product);
+                this.printer.printProductDetails(product);
             }
         }else {
             System.out.println("Продукт с ID "+product_id+" не е намерен!");
@@ -231,7 +224,7 @@ public class Store {
             for (Product product:findProducts
             ) {
                 System.out.println("Намерени са "+findProducts.size()+" бр. продукти.");
-                printHelper(product);
+                this.printer.printProductDetails(product);
             }
         }else {
             System.out.println("Продукт с име "+product_name+" не е намерен!");
@@ -428,20 +421,20 @@ public class Store {
         var sortedProducts = products.stream().
                 sorted(Comparator.comparing(Product::getName)).
                 collect(Collectors.toList());
-        printProductList(sortedProducts);
+       this.printer.printProductList(sortedProducts);
     }
     public void pritProcutsSortedByPrice(){
         var sortedProducts = products.stream().
                 sorted(Comparator.comparing(Product::getPrice)).
                 collect(Collectors.toList());
-        printProductList(sortedProducts);
+        this.printer.printProductList(sortedProducts);
     }
     public void printProductsSortedByExpirationDate(){
         var sortedProducts = products.stream()
                 .filter(product -> product.getExpires_in() != null)
                 .sorted(Comparator.comparing(Product::getExpires_in))
                 .collect(Collectors.toList());
-        printProductList(sortedProducts);
+       this.printer.printProductList(sortedProducts);
     }
 
     public void printAllProductsSortedByNamePriceExpirationDate(){
@@ -451,7 +444,7 @@ public class Store {
                                 .thenComparing(Product::getPrice)
                                 .thenComparing(Product::getExpires_in))
                         .collect(Collectors.toList());
-        printProductList(sortedProducts);
+        this.printer.printProductList(sortedProducts);
 
     }
 
@@ -472,34 +465,19 @@ public class Store {
                 }
             }
         }
+         printProductsByCategory(category);
 
-
+    }
+    public void printProductsByCategory(ProductCategory category) {
         for (Product product:products
-             ) {
-            if (product.getCategory()==category) {
+        ) {
+            if (product.getCategory()== category) {
                 System.out.println(product);
             }
         }
     }
 
-    private void printProductList(List<Product> productList) {
-        for (Product product : productList) {
-
-            System.out.println("*".repeat(10));
-
-            System.out.println("ID на продукта: "+product.getProduct_id());
-            System.out.println("Име на продукта: "+product.getName());
-            System.out.println("Количество на продукта: "+product.getQuantity());
-            System.out.println("Цена на продукта: "+product.getPrice());
-            System.out.println("Цвят на продукта: "+product.getColor());
-            System.out.println("Срок на годност на продукта: "+product.getExpires_in());
-
-            System.out.println("*".repeat(10));
-            System.out.println("-".repeat(10));
-        }
-    }
-
-    public static List<Employee> readEmployeeFromCSV(String csvFilePath){
+    public List<Employee> readEmployeeFromCSV(String csvFilePath){
 //        List<src.Entity.Employee> employees = new ArrayList<>();
         try (BufferedReader br = new BufferedReader(new FileReader(csvFilePath))){
             String line;
@@ -526,7 +504,7 @@ public class Store {
         return employees;
     }
 
-    public static List<Product> readProductsFromCSV() throws ParseException {
+    public List<Product> readProductsFromCSV() throws ParseException {
         File directory = new File("src/ProductFolder");
         File[] files = directory.listFiles((dir, name) -> name.startsWith("products_") && name.endsWith(".CSV"));
 
@@ -622,7 +600,7 @@ public class Store {
         }
     }
 
-    public static List<Product>getProducts(){
+    public List<Product>getProducts(){
         return products;
     }
     public List<Employee>getEmployees(){return employees;}
