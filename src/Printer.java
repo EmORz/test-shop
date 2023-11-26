@@ -54,8 +54,12 @@ public class Printer {
     }
 
     public void printMenuUser(){
-        System.out.println("1. Команда");
-        System.out.println("2. Команда");
+        System.out.println("1. Принтиране на всички продукти");
+        System.out.println("2. Принтиране на всички продукти по категория");
+        System.out.println("4. Търсене на продукти по име");
+        System.out.println("5. Добавяне на продукт към потребителска количка /по ID и к-во/");
+        System.out.println("6. Изчисляване на цената на продуктите в количката");
+        System.out.println("7. Покупка на продуктите в количката");
         System.out.println("3. Изход");
     }
 
