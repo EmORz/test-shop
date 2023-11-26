@@ -293,7 +293,7 @@ public class Store {
     private void saveProductsToCSV(){
         LocalDateTime timestamp = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss");
-        String folderPath = "ProductFolder";
+        String folderPath = "src\\ProductFolder";
         String fileName = folderPath+File.separator+"products_" + timestamp.format(formatter) + ".CSV";
 
         try (FileWriter writer = new FileWriter(fileName)){
@@ -312,6 +312,9 @@ public class Store {
         }
     }
 
+    public void saveProductAfterShopping(){
+        this.saveProductsToCSV();
+    }
     private void addProduct(Product product){
         int id = product.getProduct_id();
         boolean isHasProduct = true;
@@ -418,19 +421,19 @@ public class Store {
     }
 
     public void printProductsSortedByName(){
-        var sortedProducts = products.stream().
+        List<Product> sortedProducts = products.stream().
                 sorted(Comparator.comparing(Product::getName)).
                 collect(Collectors.toList());
        this.printer.printProductList(sortedProducts);
     }
     public void pritProcutsSortedByPrice(){
-        var sortedProducts = products.stream().
+        List<Product> sortedProducts = products.stream().
                 sorted(Comparator.comparing(Product::getPrice)).
                 collect(Collectors.toList());
         this.printer.printProductList(sortedProducts);
     }
     public void printProductsSortedByExpirationDate(){
-        var sortedProducts = products.stream()
+        List<Product> sortedProducts = products.stream()
                 .filter(product -> product.getExpires_in() != null)
                 .sorted(Comparator.comparing(Product::getExpires_in))
                 .collect(Collectors.toList());
@@ -438,7 +441,7 @@ public class Store {
     }
 
     public void printAllProductsSortedByNamePriceExpirationDate(){
-        var sortedProducts =
+        List<Product> sortedProducts =
                 products.stream()
                         .sorted(Comparator.comparing(Product::getName)
                                 .thenComparing(Product::getPrice)

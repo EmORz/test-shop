@@ -1,10 +1,12 @@
 package src;
 
 import src.Entity.Employee;
+import src.Entity.User;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.UUID;
 
 import static src.Main.*;
 
@@ -12,6 +14,7 @@ public class ShopApp {
 
     private Scanner scanner;
     private List<Employee> employeeData;
+    private User user;
     private Store store;
     private Printer printer;
     private static String employeeFileName = "src/employee.CSV";
@@ -26,6 +29,8 @@ public class ShopApp {
         this.isMenuForEmployee = false;
         this.store = new Store();
         employeeData = this.store.readEmployeeFromCSV(employeeFileName);
+        this.user = new User();
+
     }
 
     public void menuForChoose(){
@@ -113,7 +118,12 @@ public class ShopApp {
         System.out.println("Добре дошли в модул за клиенти!");
         System.out.println("За да влезете в системата въведете user_name.");
         String enterUserName = scanner.next();
-//        user.login(0, enterUserName);
+        //За потребителя не се пази информация. Опитвам генериране на уникално ID за всеки потребител.
+        UUID userId = UUID.randomUUID();
+        long mostSignificantBits = userId.getMostSignificantBits();
+        long leastSignificanBits = userId.getLeastSignificantBits();
+        int integerRepresentation = Math.abs((int) mostSignificantBits+(int) leastSignificanBits);
+        user.login(integerRepresentation, enterUserName);
         while (!exitRequested){
             isMenuForEmployee = false;
 
@@ -122,6 +132,13 @@ public class ShopApp {
             int customerChoice = getUserChoice();
 
             switch (customerChoice){
+                case 1:user.printAvailableProducts();break;
+                case 2:user.searchProductsByCategory();break;
+                case 4:user.searchProductByName();break;
+                case 5:user.addToShoppingCart();break;
+                case 6:
+                    System.out.println("Обща цена на продуктите в кошницата: "+user.calculateTotalPrice()+" лв.");break;
+                case 7: user.checkout();break;
 
                 case 3: exitRequested=true;break;
                 default:
