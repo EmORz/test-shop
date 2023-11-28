@@ -22,6 +22,8 @@
             <scope>compile</scope>
         </dependency>
 
+
+
         <!-- Mockito зависимост -->
         <dependency>
             <groupId>org.mockito</groupId>
