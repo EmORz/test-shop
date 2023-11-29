@@ -3,12 +3,11 @@ package src;
 import src.Entity.Employee;
 import src.Entity.User;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import java.util.UUID;
-
-import static src.Main.*;
 
 public class ShopApp {
 
@@ -18,8 +17,10 @@ public class ShopApp {
     private Store store;
     private Printer printer;
     private static String employeeFileName = "src/employee.CSV";
-    private boolean exitRequested;
+    public boolean exitRequested;
     private boolean isMenuForEmployee;
+
+
 
     public ShopApp() {
         this.scanner = new Scanner(System.in);
@@ -33,7 +34,12 @@ public class ShopApp {
 
     }
 
-    public void menuForChoose(){
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public void menuForChoose(InputStream inputStream){
+        this.scanner = new Scanner(inputStream);
                 while (!exitRequested){
 
             System.out.println("1. Вход като служител");
@@ -42,8 +48,8 @@ public class ShopApp {
             int chooseTypeLogin = getUserChoice();
 
             switch (chooseTypeLogin){
-                case 1: loginAsEmployee();break;
-                case 2:loginAsCustomer();break;
+                case 1: loginAsEmployee(System.in);break;
+                case 2:loginAsCustomer(System.in);break;
                 case 3: exitRequested=true;break;
                 default:
                     System.out.println("Невалиден избор. Моля, опитайте отново.");break;
@@ -57,10 +63,11 @@ public class ShopApp {
     }
 
     public void start(){
-        menuForChoose();
+        menuForChoose(System.in);
     }
 
-    public void loginAsEmployee() {
+    public void loginAsEmployee(InputStream inputStream) {
+        this.scanner = new Scanner(inputStream);
         System.out.println("Добре дошли в модул за служители!");
         System.out.println("За да влезете в системата въведете уникално Id и first_name.");
         System.out.print("Въведи Id: ");
@@ -114,7 +121,8 @@ public class ShopApp {
         }
     }
 
-    private void loginAsCustomer() {
+    public void loginAsCustomer(InputStream inputStream) {
+        this.scanner = new Scanner(inputStream);
         System.out.println("Добре дошли в модул за клиенти!");
         System.out.println("За да влезете в системата въведете user_name.");
         String enterUserName = scanner.next();
