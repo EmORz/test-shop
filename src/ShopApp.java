@@ -91,7 +91,7 @@ public class ShopApp {
                     switch (employeeChoice){
                         case 1: store.printAllProducts();break;
                         case 4: store.findProductById();break;
-                        case 5: store.findProductByName();break;
+                        case 5: store.findProductByName(System.in);break;
                         case 6: store.printProductsByPriceGreaterThanOrEqual();break;
                         case 7: store.printProductsByPriceLower();break;
                         case 8: store.printAllProductsByQuantityGreaterThanOrEqual();break;
