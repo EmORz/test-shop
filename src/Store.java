@@ -356,6 +356,7 @@ public class Store {
     }
     public Product createProduct (){
         this.scanner = new Scanner(System.in);
+
         int current_id =0;
         for (Product product:products
              ) {
@@ -373,7 +374,8 @@ public class Store {
         double price = new DoubleValidator().validate(scanner, "цена");
         scanner.nextLine();
         System.out.println("Добавяне вид/категория на продукта: food, drinks, sanitary, others, makeup");
-        String type = scanner.nextLine().toUpperCase();
+//        String type = this.scanner.nextLine().toUpperCase();
+        String type = new StringValidator().validate(scanner,"product");
         ProductCategory category=null ;
         Product product= new Product();
         while (true){

@@ -10,11 +10,12 @@ public class StringValidator implements Validator<String> {
         while (true){
             if (scanner.hasNextLine()) {
                 String newName = scanner.nextLine();
-                if (newName.length()>=3) {
+                if (newName.length()>=2) {
                     return newName;
-                }else {
-                    System.out.println("Наименованието на продукта "+newName+" трябва да е поне 3 символа./"+newName.length());
                 }
+//                else {
+//                    System.out.println("Наименованието на продукта "+newName+" трябва да е поне 3 символа./"+newName.length());
+//                }
             }
         }
     }
