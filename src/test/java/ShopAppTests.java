@@ -60,12 +60,7 @@ public class ShopAppTests {
 
     }
     @Test
-    public void testLoginAsEmployee() {
-
-
-
-
-    }
+    public void testLoginAsEmployee() {}
     @Test
     public void testLoginAsCustomer() {
         User user = mock(User.class);

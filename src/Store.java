@@ -69,9 +69,9 @@ public class Store {
     }
 
     public void changeProductNameById() {
-
+        this.scanner = new Scanner(System.in);
         System.out.println("Въведете ID на продукта: ");
-        int productId = new IntegerValidator().validate(scanner, "ID");
+        int productId = new IntegerValidator().validate(this.scanner, "ID");
 
         scanner.nextLine();
         String newName;
@@ -91,6 +91,7 @@ public class Store {
     }
 
     public void changeProductQuantityById() {
+        this.scanner = new Scanner(System.in);
         System.out.println("Въведете ID на продукта: ");
         int productId = new IntegerValidator().validate(scanner, "ID") ;
 
@@ -100,18 +101,19 @@ public class Store {
             if (product.getProduct_id() == productId) {
                 System.out.println("Текущо количество на продукт с ID " + productId + ": " + product.getQuantity());
                 System.out.println("Въведете ново количество на продукта: ");
-                newQuantity = new PositiveIntegerValidator().validate(scanner,"количество");
+                newQuantity = new PositiveIntegerValidator().validate(this.scanner,"количество");
 
                 product.setQuantity(newQuantity);
                 addProduct(product);
                 System.out.println("Количествo на продукт с ID " + productId + " е променено на " + newQuantity);
-                break;
+                return;
             }
         }
         System.out.println("Продукт с ID " + productId + " не беше намерен.");
     }
 
     public void changeProductPriceById() {
+        this.scanner = new Scanner(System.in);
         System.out.println("Въведете ID на продукта: ");
         int productId = new IntegerValidator().validate(scanner, "ID") ;
 
@@ -208,7 +210,9 @@ public class Store {
         return findProducts;
 
     }
-    public List<Product> findProductByName(){
+    public List<Product> findProductByName(InputStream inputStream){
+        this.scanner = new Scanner(inputStream);
+
         List<Product> findProducts = new ArrayList<>();
         System.out.print("Въведи име на продукт: ");
         String product_name = scanner.next();
@@ -351,6 +355,7 @@ public class Store {
         }
     }
     public Product createProduct (){
+        this.scanner = new Scanner(System.in);
         int current_id =0;
         for (Product product:products
              ) {
