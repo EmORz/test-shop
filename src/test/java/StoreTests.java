@@ -4,6 +4,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
 import src.Entity.Product;
+import src.Enums.ProductCategory;
 import src.Store;
 import src.Validate.IntegerValidator;
 
@@ -42,12 +43,19 @@ public class StoreTests {
 
     @Test
     public void testCreateProduct (){
-//        String input = "TestProduct\n5\n10.99\nfood\nRed\n30\n";
-//        provideInput(input);
-//
-//        Product createdProduct = store.createProduct();
-//
-//        Assert.assertNotNull(createdProduct);
+        String input = "TestProduct\n5\n10,19\nFOOD\nRed\n30\n";
+        provideInput(input);
+
+        Product createdProduct = store.createProduct();
+        var currentDate = createdProduct.getExpires_in();
+
+        Assert.assertNotNull(createdProduct);
+        Assert.assertEquals("TestProduct", createdProduct.getName());
+        Assert.assertEquals(5, createdProduct.getQuantity());
+        Assert.assertEquals(10.19, createdProduct.getPrice(),0.001);
+        Assert.assertEquals(ProductCategory.FOOD, createdProduct.getCategory());
+        Assert.assertEquals("Red", createdProduct.getColor());
+        Assert.assertEquals(currentDate, createdProduct.getExpires_in());
 
 
     }
