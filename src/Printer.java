@@ -1,5 +1,6 @@
 package src;
 
+import src.Entity.Employee;
 import src.Entity.Product;
 import java.util.List;
 
@@ -10,6 +11,16 @@ public class Printer {
 
     }
 
+    public void printEmployeeList(List<Employee> employeeList) {
+        for (Employee employee : employeeList) {
+            printEmployeeDetails(employee);
+        }
+    }
+    public void printEmployeeDetails(Employee employee){
+        System.out.println("Служителите са сортирани по заплата.");
+        System.out.println(employee.getFirst_name()+" "+employee.getLast_name()+"; Заплата: "+employee.getSalary());
+
+    }
     public void printProductDetails(Product product) {
         System.out.println("*".repeat(10));
 

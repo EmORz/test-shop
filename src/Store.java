@@ -406,7 +406,7 @@ public class Store {
         return employee;
     }
 
-    private void printEmployees(){
+    public void printEmployees(List<Employee> employees){
         for (Employee employee:employees
         ) {
             System.out.println(employee.getFirst_name()+" "+employee.getLast_name()+"; Заплата: "+employee.getSalary());
@@ -417,14 +417,16 @@ public class Store {
         Collections.sort(employees, Comparator.comparing(Employee::getFirst_name)
                 .thenComparing(Employee::getLast_name));
         System.out.println("Служителите са сортирани по първо име и фамилия.");
-        printEmployees();
+//        printEmployees();
     }
 
     public void sortEmployeeBySalary(){
-        Collections
-                .sort(employees, Comparator.comparing(Employee::getSalary));
-        System.out.println("Служителите са сортирани по заплата.");
-        printEmployees();
+        List<Employee> sortedSalary = employees.stream().
+                sorted(Comparator.comparing(Employee::getSalary)).
+                collect(Collectors.toList());
+
+//        System.out.println("Служителите са сортирани по заплата.");
+        this.printer.printEmployeeList(sortedSalary);
     }
 
     public void printProductsSortedByName(){
@@ -612,6 +614,9 @@ public class Store {
 
     public List<Product>getProducts(){
         return products;
+    }
+    public void setProducts(List<Product> products) {
+        this.products = products;
     }
     public List<Employee>getEmployees(){return employees;}
 }
