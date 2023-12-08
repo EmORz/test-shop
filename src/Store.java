@@ -12,41 +12,15 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Collectors;
-//методи
-//        - - методи за записване на продуктите - в името да има timestamp (точното време на записване на документа)
-//        - - метод за зареждане на продуктите
-//        – Методи на клиент
-//        –void printAvailableProducts()
-//        –void searchProductsByCategory(String category)
-//        –void searchProductsByName(String name)
-//        –void addToShoppingCart(int productId, int quantity)
-//        –double calculateTotalPrice()
-//        –void checkout() - изчиства потребителската количка и записва данните от покупката в timestamp .CSV файл - нещо като касова бележка за потребителя.
-//        – Методи на служител
-//        – void printAllProducts()
-//        –  void sortProductsByName()
-//        — void sortProductsByPrice()
-//        – void sortProductsByExpirationDate()
-//        – void printProductById(int productId)
-//        — void printProductByName(String productName)
-//        — void printProductsByPriceGreaterThan(double price)
-//        –void printProductsByPriceLessThan(double price)
-//        – void printProductsByQuantityGreaterThanOrEqual(int quantity)
-//        – void printProductsByQuantityLessThan(int quantity)
-//        – src.Entity.Product createProduct(int product_id, String name, double price, int quantity, String type, String color, String expires_in) - може да се добави валидация на данните.
-//        –void addProduct(src.Entity.Product product)
-//        – void changeProductPriceById(int productId, double newPrice)
-//        – void changeProductQuantityById(int productId, int newQuantity)
-//        –void changeProductNameById(int productId, String newName)
-//        – void deleteProductById(int productId)
-//        –void sortEmployeesByName()
-//        –void sortEmployeesBySalary()
+
 
 public class Store {
     private static Scanner scanner = new Scanner(System.in);
+    private boolean testMode = false;
+    private static String fileName = "src/employee.CSV";
     private List<Product> products;
     private List<Product> shoppingCart;
-    private static List<Employee> employees;
+    private List<Employee> employees;
     private static Printer printer;
 
     public Store() {
@@ -59,16 +33,25 @@ public class Store {
         }
         this.shoppingCart = new ArrayList<>();
         this.employees = new ArrayList<>();
+        try {
+            this.employees = readEmployeeFromCSV(fileName);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
-    public void printAllProducts(){
-        for (Product product:products
+    public void setTestMode(boolean testMode) {
+        this.testMode = testMode;
+    }
+
+    public void printaAllProducts(){
+        for (Product product:this.products
         ) {
             this.printer.printProductDetails(product);
         }
     }
 
-    public void changeProductNameById() {
+    public void changeProductNameById(boolean testMode) {
         this.scanner = new Scanner(System.in);
         System.out.println("Въведете ID на продукта: ");
         int productId = new IntegerValidator().validate(this.scanner, "ID");
@@ -82,7 +65,7 @@ public class Store {
                 newName = new StringValidator().validate(scanner,"ново име");
 
                 product.setName(newName);
-                addProduct(product);
+                addProduct(product, testMode);
                 System.out.println("Името на продукт с ID " + productId + " е променено на " + newName);
                 return;
             }
@@ -90,7 +73,7 @@ public class Store {
         System.out.println("Продукт с ID " + productId + " не беше намерен.");
     }
 
-    public void changeProductQuantityById() {
+    public void changeProductQuantityById(boolean testMode) {
         this.scanner = new Scanner(System.in);
         System.out.println("Въведете ID на продукта: ");
         int productId = new IntegerValidator().validate(scanner, "ID") ;
@@ -104,7 +87,7 @@ public class Store {
                 newQuantity = new PositiveIntegerValidator().validate(this.scanner,"количество");
 
                 product.setQuantity(newQuantity);
-                addProduct(product);
+                addProduct(product, testMode);
                 System.out.println("Количествo на продукт с ID " + productId + " е променено на " + newQuantity);
                 return;
             }
@@ -112,7 +95,7 @@ public class Store {
         System.out.println("Продукт с ID " + productId + " не беше намерен.");
     }
 
-    public void changeProductPriceById() {
+    public void changeProductPriceById(boolean testMode) {
         this.scanner = new Scanner(System.in);
         System.out.println("Въведете ID на продукта: ");
         int productId = new IntegerValidator().validate(scanner, "ID") ;
@@ -126,7 +109,7 @@ public class Store {
                 newPrice = new PositiveDoubleValidator().validate(scanner, "цена");
 
                 product.setPrice(newPrice);
-                addProduct(product);
+                addProduct(product, testMode);
                 System.out.println("Цената на продукт с ID " + productId + " е променена на " + newPrice);
                 return;
             }
@@ -184,9 +167,10 @@ public class Store {
         }
     }
 
-    public List<Product> findProductById(){
+    public List<Product> findProductById(InputStream inputStream){
+        this.scanner = new Scanner(inputStream);
         System.out.print("Въведи Id на продукт: ");
-        int product_id = new IntegerValidator().validate(scanner, "Id") ;
+        int product_id = scanner.nextInt();
 
         List<Product> findProducts = new ArrayList<>();
 
@@ -237,7 +221,7 @@ public class Store {
         return findProducts;
 
     }
-    public void deleteEmployeeById(int employee_id){
+    public void deleteEmployeeById(int employee_id, boolean testMode){
         List<Employee> employeeForDelete = new ArrayList<>();
         boolean isHasEmployeeForDelete = false;
         for (Employee employee:employees
@@ -250,7 +234,7 @@ public class Store {
         if (employeeForDelete != null&& isHasEmployeeForDelete) {
             int id = employeeForDelete.get(0).getEmployee_id();
             employees.removeAll(employeeForDelete);
-            saveEmployeeToCSV("src/employee.CSV", employees);
+            saveEmployeeToCSV( employees, testMode);
             System.out.println("Служител/и с ID "+id+" са изтрит!");
         }else {
             System.out.println("Служител с ID "+employee_id+" не е намерен!");
@@ -273,15 +257,20 @@ public class Store {
         if (productForRemove != null && isHasProductForDelete) {
             int id = productForRemove.get(0).getProduct_id();
             products.removeAll(productForRemove);
-            saveProductsToCSV();
+            saveProductsToCSV(false);
             System.out.println("Продукт/и с ID "+id+" са изтрит!");
         }else {
             System.out.println("Продукт с ID "+product_id+" не е намерен!");
         }
     }
 
-    private void saveEmployeeToCSV(String csvFilePath, List<Employee> employees){
-        try (FileWriter writer = new FileWriter(csvFilePath)) {
+    public void saveEmployeeToCSV( List<Employee> employees, boolean testMode){
+        String csvFilePath = testMode==true? "src\\TestData":"src\\ProductFolder";
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss");
+        LocalDateTime timestamp = LocalDateTime.now();
+        String fileName = csvFilePath+File.separator+"employees_" + timestamp.format(formatter) + ".CSV";
+
+        try (FileWriter writer = new FileWriter(fileName)) {
             writer.write("employee_id,first_name,last_name,age,salary\n");
             for (Employee employee:employees
                  ) {
@@ -294,67 +283,101 @@ public class Store {
             e.printStackTrace();
         }
     }
-    private void saveProductsToCSV(){
-        LocalDateTime timestamp = LocalDateTime.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss");
-        String folderPath = "src\\ProductFolder";
-        String fileName = folderPath+File.separator+"products_" + timestamp.format(formatter) + ".CSV";
 
-        try (FileWriter writer = new FileWriter(fileName)){
-            writer.write("product_id;name;price;quantity;category;color;expires_in\n");
+    public void saveProductsToCSV(boolean testMode){
 
-            for (Product product:products
-                 ) {
-                writer.write(String.format("%d;%s;%.2f;%d;%s;%s;%s\n",
-                        product.getProduct_id(), product.getName(),
-                        product.getPrice(), product.getQuantity(),product.getCategory(),
-                        product.getColor(), product.getExpires_in()));
+        if (testMode == true) {
+            LocalDateTime timestamp = LocalDateTime.now();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss");
+            String folderPath = "src\\TestData";
+            String fileName = folderPath+File.separator+"products_" + timestamp.format(formatter) + ".CSV";
+
+            try (FileWriter writer = new FileWriter(fileName)){
+                writer.write("product_id;name;price;quantity;category;color;expires_in\n");
+
+                for (Product product:products
+                ) {
+                    writer.write(String.format("%d;%s;%.2f;%d;%s;%s;%s\n",
+                            product.getProduct_id(), product.getName(),
+                            product.getPrice(), product.getQuantity(),product.getCategory(),
+                            product.getColor(), product.getExpires_in()));
+                }
+
+            } catch (IOException e) {
+                throw new RuntimeException(e);
             }
+        }else if (testMode == false) {
+            LocalDateTime timestamp = LocalDateTime.now();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss");
+            String folderPath = "src\\ProductFolder";
+            String fileName = folderPath+File.separator+"products_" + timestamp.format(formatter) + ".CSV";
 
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+            try (FileWriter writer = new FileWriter(fileName)){
+                writer.write("product_id;name;price;quantity;category;color;expires_in\n");
+
+                for (Product product:products
+                ) {
+                    writer.write(String.format("%d;%s;%.2f;%d;%s;%s;%s\n",
+                            product.getProduct_id(), product.getName(),
+                            product.getPrice(), product.getQuantity(),product.getCategory(),
+                            product.getColor(), product.getExpires_in()));
+                }
+
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         }
+
     }
 
     public void saveProductAfterShopping(){
-        this.saveProductsToCSV();
+        this.saveProductsToCSV(false);
     }
-    private void addProduct(Product product){
+    public void addProduct(Product product, boolean testMode){
+        List<Product> updatedProducts = new ArrayList<>(products);
+        updatedProducts.add(product);
+        products = updatedProducts;
         int id = product.getProduct_id();
         boolean isHasProduct = true;
         for (Product productt:products
              ) {
             if (productt.getProduct_id() == id) {
                 System.out.println("Променяте продукт с Id "+product.getProduct_id());
-                saveProductsToCSV();
+                saveProductsToCSV(testMode);
                 isHasProduct=false;
                 return;
             }
         }
         if (isHasProduct) {
             products.add(product);
-            saveProductsToCSV();
+            saveProductsToCSV(testMode);
             System.out.println("Успешно добавихте продукт!");
         }
 
+
     }
-    private void addEmployee(Employee employee){
+    private void addEmployee(Employee employee, boolean testMode){
+        List<Employee> updatedEmployees = new ArrayList<>(employees);
+        updatedEmployees.add(employee);
+        employees = updatedEmployees;
+
         int id = employee.getEmployee_id();
         boolean isHasEmployee = true;
         for (Employee employee1:employees
         ) {
             if (employee1.getEmployee_id() == id) {
                 System.out.println("Вече има запис с Id "+employee1.getEmployee_id());
+                saveEmployeeToCSV(employees, testMode);
                 isHasEmployee=false;
-                break;
+                return;
             }
         }
         if (isHasEmployee) {
             employees.add(employee);
-            saveEmployeeToCSV("src/employee.CSV",employees);
+            saveEmployeeToCSV(employees, testMode);
         }
     }
-    public Product createProduct (){
+    public Product createProduct (boolean testMode){
         this.scanner = new Scanner(System.in);
 
         int current_id =0;
@@ -397,12 +420,12 @@ public class Store {
 
         LocalDate expires_in = currentDate.plusDays(additionalDays);
          product = new Product(product_id,name,quantity, price,category, color, expires_in);
-        addProduct(product);
+        addProduct(product, testMode);
         return product;
     }
-    public Employee createEmployee(int employee_id, String first_name, String last_name, int age, double salary){
+    public Employee createEmployee(int employee_id, String first_name, String last_name, int age, double salary, boolean testMode){
         Employee employee = new Employee(employee_id, first_name, last_name, age,salary);
-        addEmployee(employee);
+        addEmployee(employee, testMode);
         return employee;
     }
 
@@ -414,19 +437,19 @@ public class Store {
     }
 
     public void sortEmployeesByName(){
-        Collections.sort(employees, Comparator.comparing(Employee::getFirst_name)
-                .thenComparing(Employee::getLast_name));
-        System.out.println("Служителите са сортирани по първо име и фамилия.");
-//        printEmployees();
+        List<Employee> sortedEmployeesByName = employees.stream().distinct().
+                sorted(Comparator.comparing(Employee::getFirst_name)
+                        .thenComparing(Employee::getLast_name)).
+                collect(Collectors.toList());
+        this.printer.printEmployeeList(sortedEmployeesByName, "име.");
     }
 
     public void sortEmployeeBySalary(){
-        List<Employee> sortedSalary = employees.stream().
+        List<Employee> sortedEmployeesBySalary = employees.stream().distinct().
                 sorted(Comparator.comparing(Employee::getSalary)).
                 collect(Collectors.toList());
 
-//        System.out.println("Служителите са сортирани по заплата.");
-        this.printer.printEmployeeList(sortedSalary);
+        this.printer.printEmployeeList(sortedEmployeesBySalary, "заплата.");
     }
 
     public void printProductsSortedByName(){
@@ -461,6 +484,7 @@ public class Store {
     }
 
     public void printProductsByCategory(){
+        this.scanner = new Scanner(System.in);
         System.out.println("Въведете категория на продукт: food, drinks, sanitary, others, makeup");
         String categoryInput;
         ProductCategory category = null;
@@ -481,10 +505,11 @@ public class Store {
 
     }
     public void printProductsByCategory(ProductCategory category) {
+        this.scanner = new Scanner(System.in);
         for (Product product:products
         ) {
             if (product.getCategory()== category) {
-                System.out.println(product);
+                this.printer.printProductDetails(product);
             }
         }
     }
@@ -617,6 +642,9 @@ public class Store {
     }
     public void setProducts(List<Product> products) {
         this.products = products;
+    }
+    public void setEmployees(List<Employee> employees){
+        this.employees = employees;
     }
     public List<Employee>getEmployees(){return employees;}
 }

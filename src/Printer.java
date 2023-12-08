@@ -11,13 +11,14 @@ public class Printer {
 
     }
 
-    public void printEmployeeList(List<Employee> employeeList) {
+    public void printEmployeeList(List<Employee> employeeList, String text) {
+        System.out.println("Служителите са сортирани по "+text);
         for (Employee employee : employeeList) {
             printEmployeeDetails(employee);
         }
     }
     public void printEmployeeDetails(Employee employee){
-        System.out.println("Служителите са сортирани по заплата.");
+
         System.out.println(employee.getFirst_name()+" "+employee.getLast_name()+"; Заплата: "+employee.getSalary());
 
     }

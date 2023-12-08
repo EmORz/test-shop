@@ -1,11 +1,9 @@
 package src.Entity;
 
+import src.Printer;
 import src.Store;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -21,6 +19,7 @@ public class User implements src.Interfaces.User {
     private List<Product> shoppingCart;
     private Store store = new Store();
     private static Scanner scanner = new Scanner(System.in);
+    private Printer printer = new Printer();
 
     public User() {
         this.shoppingCart = new ArrayList<>();
@@ -43,7 +42,7 @@ public class User implements src.Interfaces.User {
 
     public void printAvailableProducts(){
         for (Product product: store.getProducts()) {
-            System.out.println(product.toString());
+            this.printer.printProductDetails(product);
         }
     }
 
@@ -54,6 +53,7 @@ public class User implements src.Interfaces.User {
 //    }
 
     public void searchProductsByCategory(){
+        this.scanner = new Scanner(System.in);
         System.out.println("Въведете категория на продукт: food, drinks, sanitary, others, makeup");
         String category = scanner.next();
         boolean isCategoryAvailable = false;
@@ -63,7 +63,7 @@ public class User implements src.Interfaces.User {
             ||product instanceof  MakeUpProduct && category.equalsIgnoreCase("Makeup")
             ||product instanceof  OthersProduct && category.equalsIgnoreCase("Others")
             || product instanceof  SanitaryProduct && category.equalsIgnoreCase("Sanitary")){
-                System.out.println(product.toString());
+                this.printer.printProductDetails(product);
                 isCategoryAvailable=true;
             }
         }
@@ -73,12 +73,13 @@ public class User implements src.Interfaces.User {
     }
 
     public void searchProductByName(){
+        this.scanner = new Scanner(System.in);
         System.out.println("Въведете име на продукта: ");
         String name = scanner.nextLine();
         boolean isProductAvailable = false;
         for (Product product: store.getProducts()) {
             if (product.getName().equalsIgnoreCase(name)){
-                System.out.println(product.toString());
+                this.printer.printProductDetails(product);
                 isProductAvailable = true;
             }
         }
@@ -87,9 +88,10 @@ public class User implements src.Interfaces.User {
         }
     }
 
-    public void addToShoppingCart(){
+    public void addToShoppingCart(InputStream inputStream){
+        this.scanner = new Scanner(inputStream);
         System.out.println("Въведете ID на продукта: ");
-        int productId = scanner.nextInt();
+        int productId = this.scanner.nextInt();
         Product product=findProductById(productId);
         System.out.println("Въведете количество на продукта: ");
         int quantity = scanner.nextInt();
@@ -98,7 +100,7 @@ public class User implements src.Interfaces.User {
                     product.getCategory(),product.getColor(),product.getExpires_in());
             shoppingCart.add(cartItme);
             product.setQuantity(product.getQuantity()-quantity);
-            System.out.println("Added "+quantity+" "+product.getName()+"to the shopping cart.");
+            System.out.println("Added "+quantity+" "+product.getName()+" to the shopping cart.");
         }else {
             System.out.println("src.Entity.Product not found or insufficient quantity.");
         }
@@ -139,7 +141,7 @@ public class User implements src.Interfaces.User {
             e.printStackTrace();
         }
     }
-    private Product findProductById(int productId){
+    public Product findProductById(int productId){
         for (Product product: store.getProducts()) {
             if(product.getProduct_id()==productId){
                 return product;

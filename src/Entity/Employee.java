@@ -1,6 +1,9 @@
 package src.Entity;
 
 import src.Interfaces.User;
+
+import java.util.Objects;
+
 //клас src.Entity.Employee implement src.Interfaces.src.Entity.User
 //        - - employee_id,
 //        - - first_name,
@@ -27,6 +30,20 @@ public class Employee implements User {
         System.out.println("Добре дошли "+first_name+"!");
         System.out.println("Изберете опция: ");
 
+    }
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Employee employee = (Employee) o;
+        return Objects.equals(getFirst_name(), employee.getFirst_name()) &&
+                Objects.equals(getLast_name(), employee.getLast_name()) &&
+                Objects.equals(getSalary(), employee.getSalary());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getFirst_name(), getLast_name(), getSalary());
     }
 
     public int getEmployee_id() {
