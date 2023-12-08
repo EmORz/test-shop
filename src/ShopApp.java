@@ -89,17 +89,17 @@ public class ShopApp {
                     int employeeChoice = getUserChoice();
 
                     switch (employeeChoice){
-                        case 1: store.printAllProducts();break;
-                        case 4: store.findProductById();break;
+                        case 1: store.printaAllProducts();break;
+                        case 4: store.findProductById(System.in);break;
                         case 5: store.findProductByName(System.in);break;
                         case 6: store.printProductsByPriceGreaterThanOrEqual();break;
                         case 7: store.printProductsByPriceLower();break;
                         case 8: store.printAllProductsByQuantityGreaterThanOrEqual();break;
                         case 9: store.printAllProductsByQuantityLower();break;
-                        case 10: store.createProduct();break;
-                        case 11: store.changeProductPriceById();break;
-                        case 12: store.changeProductQuantityById();break;
-                        case 13: store.changeProductNameById();break;
+                        case 10: store.createProduct(false);break;
+                        case 11: store.changeProductPriceById(false);break;
+                        case 12: store.changeProductQuantityById(false);break;
+                        case 13: store.changeProductNameById(false);break;
                         case 14: store.deleteProductById();break;
                         case 15: store.sortEmployeesByName();break;
                         case 16: store.sortEmployeeBySalary();break;
@@ -143,7 +143,7 @@ public class ShopApp {
                 case 1:user.printAvailableProducts();break;
                 case 2:user.searchProductsByCategory();break;
                 case 4:user.searchProductByName();break;
-                case 5:user.addToShoppingCart();break;
+                case 5:user.addToShoppingCart(System.in);break;
                 case 6:
                     System.out.println("Обща цена на продуктите в кошницата: "+user.calculateTotalPrice()+" лв.");break;
                 case 7: user.checkout();break;

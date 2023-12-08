@@ -78,4 +78,9 @@ public class Product {
     public void setPrice(double price) {
         this.price = price;
     }
+
+    public String toString() {
+        return String.format("***\nsrc.Entity.Product{\nid=%d\nname=%s\nquantity=%d\n" +
+                "price=%.2f\ntype=%s\nexpires date=%s\n}***", getProduct_id(), getName(),getQuantity(),getPrice(), getCategory(), getExpires_in());
+    }
 }
