@@ -12,10 +12,10 @@ import src.Entity.*;
 import src.Enums.ProductCategory;
 import src.Store;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.InputStream;
-import java.io.PrintStream;
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -61,6 +61,36 @@ public class UserTests {
         System.setIn(originalIn);
     }
 
+    @Test
+    public void testCheckoutWithProductsShoppingCart(){
+        String input = "1\n2\n";
+        provideInput(input);
+
+        user.addToShoppingCart(System.in);
+
+        String input2 = "2\n2\n";
+        provideInput(input2);
+        user.addToShoppingCart(System.in);
+
+        String expectedFileName = "src\\TestData\\receipt_test-20220101120000.csv";
+
+        user.checkout(true);
+
+        Assert.assertTrue(Files.exists(Paths.get(expectedFileName)));
+
+
+    }
+
+    @Test
+    public void testCheckoutEmptyShoppingCart(){
+        String expectedOutput = "Shopping cart is empty.";
+
+        user.checkout(true);
+
+        String actualOutput = outContent.toString().trim();
+
+        Assert.assertEquals(expectedOutput, actualOutput);
+    }
     @Test
     public void testCalculateTotalPrice(){
         String input = "1\n2\n";

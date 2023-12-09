@@ -114,14 +114,22 @@ public class User implements src.Interfaces.User {
         return totalPrice;
     }
 
-    public void checkout(){
+    public void checkout(boolean testMode){
         if(shoppingCart.isEmpty()){
             System.out.println("Shopping cart is empty.");
             return;
         }
-        String folderPath = "src\\ProductFolder";
+        String folderPath = testMode==false?"src\\ProductFolder":"src\\TestData";
         String timestamp= LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss"));
-        String fileName= folderPath+File.separator +"receipt_"+userId+"-"+timestamp+".csv";
+        String fileName= "";
+
+        String text ="test";
+        if (testMode == false) {
+            fileName= folderPath+File.separator +"receipt_"+userId+"-"+timestamp+".csv";
+        } else if (testMode == true) {
+            timestamp = "20220101120000";
+            fileName= folderPath+File.separator +"receipt_"+text+"-"+timestamp+".csv";
+        }
 
         store.saveProductAfterShopping();
 

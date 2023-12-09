@@ -146,7 +146,7 @@ public class ShopApp {
                 case 5:user.addToShoppingCart(System.in);break;
                 case 6:
                     System.out.println("Обща цена на продуктите в кошницата: "+user.calculateTotalPrice()+" лв.");break;
-                case 7: user.checkout();break;
+                case 7: user.checkout(false);break;
 
                 case 3: exitRequested=true;break;
                 default:
