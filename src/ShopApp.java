@@ -14,6 +14,7 @@ public class ShopApp {
     private Scanner scanner;
     private List<Employee> employeeData;
     private User user;
+    private Employee employee;
     private Store store;
     private Printer printer;
     private static String employeeFileName = "src/employee.CSV";
@@ -31,11 +32,15 @@ public class ShopApp {
         this.store = new Store();
         employeeData = this.store.readEmployeeFromCSV(employeeFileName);
         this.user = new User();
+        this.employee = new Employee();
 
     }
 
     public void setUser(User user) {
         this.user = user;
+    }
+    public void setEmployee(Employee employee){
+        this.employee = employee;
     }
 
     public void menuForChoose(InputStream inputStream){
@@ -166,7 +171,7 @@ public class ShopApp {
 
     }
 
-    private int getUserChoice() {
+    public int getUserChoice() {
         System.out.print("Изберете опция: ");
         return scanner.nextInt();
     }

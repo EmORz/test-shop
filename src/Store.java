@@ -610,7 +610,7 @@ public class Store {
                 return new FoodProduct(productId,name,quantity, price,category, color, expiresIn);
             case DRINKS:
                 return new DrinksProduct(productId,name,quantity, price,category, color, expiresIn);
-            case SANTARY:
+            case SANITARY:
                 return new SanitaryProduct(productId,name,quantity, price,category, color, expiresIn);
             case MAKEUP:
                 return new MakeUpProduct(productId,name,quantity, price,category, color, expiresIn);
@@ -628,7 +628,7 @@ public class Store {
         switch (type.toLowerCase()){
             case "food": return ProductCategory.FOOD;
             case "drinks":  return ProductCategory.DRINKS;
-            case "sanitary": return ProductCategory.SANTARY;
+            case "sanitary": return ProductCategory.SANITARY;
             case "makeup": return ProductCategory.MAKEUP;
             case "others": return ProductCategory.OTHERS;
             default:

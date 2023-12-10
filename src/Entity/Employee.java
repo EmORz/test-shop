@@ -4,12 +4,6 @@ import src.Interfaces.User;
 
 import java.util.Objects;
 
-//клас src.Entity.Employee implement src.Interfaces.src.Entity.User
-//        - - employee_id,
-//        - - first_name,
-//        - - last_name,
-//        - - age,
-//        - - salary
 public class Employee implements User {
     private int employee_id;
     private String first_name;
@@ -23,6 +17,9 @@ public class Employee implements User {
         this.last_name = last_name;
         this.age = age;
         this.salary = salary;
+    }
+
+    public Employee() {
     }
 
     @Override

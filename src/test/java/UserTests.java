@@ -14,15 +14,12 @@ import src.Store;
 
 import java.io.*;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 
-import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class UserTests {
     private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
@@ -45,11 +42,11 @@ public class UserTests {
                 new DrinksProduct(2, "B_TestProduct2", 14, 4.5, ProductCategory.DRINKS, "None", LocalDate.now()),
                 new OthersProduct(3, "C_TestProduct3", 123, 4.5, ProductCategory.OTHERS, "None", LocalDate.now()),
                 new MakeUpProduct(4, "D_TestProduct4", 14, 8.5, ProductCategory.MAKEUP, "None", LocalDate.now()),
-                new SanitaryProduct(5, "E_TestProduct5", 100, 3.0, ProductCategory.SANTARY, "Blue", LocalDate.now()),
+                new SanitaryProduct(5, "E_TestProduct5", 100, 3.0, ProductCategory.SANITARY, "Blue", LocalDate.now()),
                 new FoodProduct(6, "F_TestProduct6", 50, 6.0, ProductCategory.FOOD, "Red", LocalDate.now()),
                 new DrinksProduct(7, "G_TestProduct7", 200, 1.5, ProductCategory.DRINKS, "Yellow", LocalDate.now()),
                 new MakeUpProduct(8, "H_TestProduct8", 30, 10.0, ProductCategory.MAKEUP, "None", LocalDate.now()),
-                new SanitaryProduct(9, "I_TestProduct9", 75, 5.0, ProductCategory.SANTARY, "White", LocalDate.now()),
+                new SanitaryProduct(9, "I_TestProduct9", 75, 5.0, ProductCategory.SANITARY, "White", LocalDate.now()),
                 new OthersProduct(10, "J_TestProduct10", 20, 7.5, ProductCategory.OTHERS, "None", LocalDate.now())
         );
         Mockito.when(store.getProducts()).thenReturn(products);
@@ -59,6 +56,19 @@ public class UserTests {
         System.setOut(System.out);
         System.setErr(System.err);
         System.setIn(originalIn);
+    }
+
+    @Test
+    public void testLoginUser(){
+        User user = new User(1, "Petyr");
+
+        user.login(1, "Petyr");
+
+        String expectedOutput = "Добре дошли Petyr!"+System.lineSeparator()+"Изберете опция:";
+        String actualOutput = outContent.toString().trim();
+
+        Assert.assertEquals(expectedOutput.trim(), actualOutput);
+
     }
 
     @Test
