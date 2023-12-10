@@ -5,7 +5,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.MockitoJUnitRunner;
 import src.Entity.*;
@@ -23,7 +22,6 @@ import java.util.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class StoreTests {
@@ -52,11 +50,11 @@ public class StoreTests {
                 new DrinksProduct(2, "B_TestProduct2", 14, 4.5, ProductCategory.DRINKS, "None", LocalDate.now()),
                 new OthersProduct(3, "C_TestProduct3", 123, 4.5, ProductCategory.OTHERS, "None", LocalDate.now()),
                 new MakeUpProduct(4, "D_TestProduct4", 14, 8.5, ProductCategory.MAKEUP, "None", LocalDate.now()),
-                new SanitaryProduct(5, "E_TestProduct5", 100, 3.0, ProductCategory.SANTARY, "Blue", LocalDate.now()),
+                new SanitaryProduct(5, "E_TestProduct5", 100, 3.0, ProductCategory.SANITARY, "Blue", LocalDate.now()),
                 new FoodProduct(6, "F_TestProduct6", 50, 6.0, ProductCategory.FOOD, "Red", LocalDate.now()),
                 new DrinksProduct(7, "G_TestProduct7", 200, 1.5, ProductCategory.DRINKS, "Yellow", LocalDate.now()),
                 new MakeUpProduct(8, "H_TestProduct8", 30, 10.0, ProductCategory.MAKEUP, "None", LocalDate.now()),
-                new SanitaryProduct(9, "I_TestProduct9", 75, 5.0, ProductCategory.SANTARY, "White", LocalDate.now()),
+                new SanitaryProduct(9, "I_TestProduct9", 75, 5.0, ProductCategory.SANITARY, "White", LocalDate.now()),
                 new OthersProduct(10, "J_TestProduct10", 20, 7.5, ProductCategory.OTHERS, "None", LocalDate.now())
         );
         store.setProducts(products);
@@ -355,11 +353,12 @@ public class StoreTests {
         String[] parts = input.split("\n");
 
         var currentProduct = store.getProducts().get(Integer.parseInt(parts[0])-1);
+        var currentProductName = currentProduct.getName();
         store.changeProductNameById(true);
 
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("Въведете ID на продукта: "+System.lineSeparator());
-        stringBuilder.append("Текущо име на продукт с ID 3: " +currentProduct.getName()+System.lineSeparator());
+        stringBuilder.append("Текущо име на продукт с ID 3: " +currentProductName+System.lineSeparator());
         stringBuilder.append("Въведете ново име на продукта: "+System.lineSeparator());
         stringBuilder.append("Променяте продукт с Id 3"+System.lineSeparator());
         stringBuilder.append("Името на продукт с ID 3 е променено на "+parts[1]+System.lineSeparator());
