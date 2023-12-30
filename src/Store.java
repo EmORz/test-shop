@@ -194,6 +194,34 @@ public class Store {
         return findProducts;
 
     }
+    public List<Product> findProductsByPartOfName(InputStream inputStream){
+        this.scanner = new Scanner(inputStream);
+
+        List<Product> findProducts = new ArrayList<>();
+        System.out.print("Въведи име на продукт: ");
+        String partOf_name = scanner.next().toLowerCase();
+
+        boolean isProductFound = false;
+
+        for (Product product:products
+        ) {
+            if (product.getName().toLowerCase().contains(partOf_name)) {
+                findProducts.add(product);
+                isProductFound = true;
+            }
+        }
+        if (findProducts.size()!=0) {
+            for (Product product : findProducts
+            ) {
+                System.out.println("Намерени са " + findProducts.size() + " бр. продукти.");
+                this.printer.printProductDetails(product);
+            }
+        }
+        if (!isProductFound){
+            System.out.println("Няма продукт - "+partOf_name);
+        }
+        return null;
+    }
     public List<Product> findProductByName(InputStream inputStream){
         this.scanner = new Scanner(inputStream);
 
@@ -339,17 +367,18 @@ public class Store {
         products = updatedProducts;
         int id = product.getProduct_id();
         boolean isHasProduct = true;
+
         for (Product productt:products
              ) {
             if (productt.getProduct_id() == id) {
                 System.out.println("Променяте продукт с Id "+product.getProduct_id());
+//                productt.setQuantity(productt.getQuantity());
                 saveProductsToCSV(testMode);
                 isHasProduct=false;
-                return;
             }
         }
         if (isHasProduct) {
-            products.add(product);
+//            products.add(product);
             saveProductsToCSV(testMode);
             System.out.println("Успешно добавихте продукт!");
         }
@@ -380,14 +409,12 @@ public class Store {
     public Product createProduct (boolean testMode){
         this.scanner = new Scanner(System.in);
 
-        int current_id =0;
-        for (Product product:products
-             ) {
-            if (product.getProduct_id() > current_id) {
-                current_id = product.getProduct_id();
-            }
-        }
-        int product_id = current_id+1;
+        int current_id =products.stream()
+                .mapToInt(Product::getProduct_id)
+                .max()
+                .orElse(0) + 1;
+
+        int product_id = current_id;
         System.out.println("Id на продукта: "+product_id);
         System.out.println("Добавяне на име на продукта: ");
         String name = new StringValidator().validate(scanner, "name");
@@ -587,7 +614,25 @@ public class Store {
                         LocalDate expires_in = LocalDate.parse(expires_inStr, formatter);
 
                         Product product = additionProduct(product_id,name,quantity, price,category, color, expires_in);
-
+//                        boolean isUnique = true;
+//
+//                        for (Product existingProduct : products) {
+//                            if (existingProduct.getProduct_id() == product.getProduct_id() &&
+//                                    existingProduct.getName().equals(product.getName()) &&
+//                                    existingProduct.getPrice() == product.getPrice() &&
+//                                    existingProduct.getQuantity() == product.getQuantity() &&
+//                                    existingProduct.getCategory() == product.getCategory() &&
+//                                    existingProduct.getColor().equals(product.getColor()) &&
+//                                    existingProduct.getExpires_in().equals(product.getExpires_in())) {
+//
+//                                isUnique = false;
+//                                break;
+//                            }
+//                        }
+//
+//                        if (isUnique) {
+//                            products.add(product);
+//                        }
                         products.add(product);
                     }
                 }

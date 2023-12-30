@@ -121,7 +121,7 @@ public class UserTests {
         double totalPrice = user.calculateTotalPrice();
 
         // Assert
-        Assert.assertEquals( price1 * 2+price2*2, totalPrice, 0.001);
+        Assert.assertEquals( price1 * 2 + price2*2, totalPrice, 0.001);
 
     }
 

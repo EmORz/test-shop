@@ -97,6 +97,7 @@ public class ShopApp {
                         case 1: store.printaAllProducts();break;
                         case 4: store.findProductById(System.in);break;
                         case 5: store.findProductByName(System.in);break;
+                        case 21: store.findProductsByPartOfName(System.in);break;
                         case 6: store.printProductsByPriceGreaterThanOrEqual();break;
                         case 7: store.printProductsByPriceLower();break;
                         case 8: store.printAllProductsByQuantityGreaterThanOrEqual();break;
