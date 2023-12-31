@@ -9,6 +9,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 //– userId;
 //        – String userName;
@@ -41,16 +42,32 @@ public class User implements src.Interfaces.User {
     }
 
     public void printAvailableProducts(){
-        for (Product product: store.getProducts()) {
-            this.printer.printProductDetails(product);
-        }
+        store.getProducts()
+                .forEach(product -> printer.printProductDetails(product));
     }
 
-//    public void searchProductsByCategory(String category){
-//        for (src.Entity.Product product:Store.getProducts()) {
-//            System.out.println(product.toString());
-//        }
-//    }
+
+    public void searchProductsByPartOfName(){
+        this.scanner = new Scanner(System.in);
+
+        System.out.println("Въведете текст за търсене: ");
+        String search = scanner.nextLine().toLowerCase();
+
+        List<Product> findProducts = store
+                .getProducts()
+                .stream()
+                .filter(product -> product.getName().toLowerCase().contains(search))
+                .collect(Collectors.toList());
+
+        if (!findProducts.isEmpty()) {
+            System.out.println("Намерени са " + findProducts.size() + " бр. продукти с "+search);
+            findProducts
+                    .forEach(printer::printProductDetails);
+        }
+        else {
+            System.out.println("Няма продукт съдържащ - "+search);
+        }
+    }
 
     public void searchProductsByCategory(){
         this.scanner = new Scanner(System.in);
@@ -75,14 +92,15 @@ public class User implements src.Interfaces.User {
     public void searchProductByName(){
         this.scanner = new Scanner(System.in);
         System.out.println("Въведете име на продукта: ");
-        String name = scanner.nextLine();
-        boolean isProductAvailable = false;
-        for (Product product: store.getProducts()) {
-            if (product.getName().equalsIgnoreCase(name)){
-                this.printer.printProductDetails(product);
-                isProductAvailable = true;
-            }
-        }
+        String name = scanner.nextLine().toLowerCase();
+
+        boolean isProductAvailable = store.getProducts()
+                .stream()
+                .filter(product -> product.getName().equalsIgnoreCase(name))
+                .peek(product -> printer.printProductDetails(product))
+                .findFirst()
+                .isPresent();
+
         if (isProductAvailable==false){
             System.out.println("Търсения продукт "+name+" не е наличен! ");
         }
@@ -107,10 +125,11 @@ public class User implements src.Interfaces.User {
     }
 
     public double calculateTotalPrice(){
-        double totalPrice=0.0;
-        for (Product cartItem:shoppingCart) {
-            totalPrice+=cartItem.getPrice()*cartItem.getQuantity();
-        }
+
+        double totalPrice = shoppingCart
+                .stream()
+                .mapToDouble(product -> product.getPrice()*product.getQuantity())
+                .reduce(0.0, (total, productTotal)-> total+productTotal);
         return totalPrice;
     }
 
@@ -150,11 +169,11 @@ public class User implements src.Interfaces.User {
         }
     }
     public Product findProductById(int productId){
-        for (Product product: store.getProducts()) {
-            if(product.getProduct_id()==productId){
-                return product;
-            }
-        }
-        return null;
+        Product product = store.getProducts().stream()
+                .filter(product1 -> product1.getProduct_id()==productId)
+                .findFirst()
+                .orElse(null);
+
+        return product;
     }
 }

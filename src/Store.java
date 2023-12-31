@@ -44,11 +44,48 @@ public class Store {
         this.testMode = testMode;
     }
 
+    private int countExpiredProducts(){
+        long countProducts = products
+                .stream()
+                .filter(product ->
+                        product.getExpires_in() !=null
+                && product.getExpires_in().isBefore(LocalDate.now()))
+                .count();
+        return (int)countProducts;
+    }
+
+    private long calculateDaysUntilExpiration(LocalDate exiprationDate){
+
+        return LocalDate.now().until(exiprationDate).getDays();
+    }
+
+    public void reducePriceForExpiringProducts(){
+        products.stream()
+                .filter(product -> product.getExpires_in()!=null)
+                .filter(product -> calculateDaysUntilExpiration(product.getExpires_in())<10)
+                .forEach(product -> {
+                    double discountPrice = product.getPrice() * 0.8;
+                    product.setPrice(discountPrice);
+                    saveProductAfterShopping();
+                    System.out.println("Цената на продукта " + product.getName() + " е намалена с 20%, тъй като до изтичането на срока на годност остават по-малко от 10 дни.");
+                });
+    }
+
+    public void printExpiredProducts(){
+        System.out.println("Продукти с изтекъл срок на годност, общо: "+countExpiredProducts());
+        products
+                .stream()
+                .filter(product ->
+                        product.getExpires_in() !=null && product.getExpires_in().isBefore(LocalDate.now()))
+                .forEach(product ->{
+                    System.out.println("Изтекъл срок на годност: "+product.getName());
+                            printer.printProductDetails(product);
+                        }
+                );
+    }
     public void printaAllProducts(){
-        for (Product product:this.products
-        ) {
-            this.printer.printProductDetails(product);
-        }
+        products.stream()
+                .forEach(product -> printer.printProductDetails(product));
     }
 
     public void changeProductNameById(boolean testMode) {
@@ -197,30 +234,25 @@ public class Store {
     public List<Product> findProductsByPartOfName(InputStream inputStream){
         this.scanner = new Scanner(inputStream);
 
-        List<Product> findProducts = new ArrayList<>();
         System.out.print("Въведи име на продукт: ");
         String partOf_name = scanner.next().toLowerCase();
 
-        boolean isProductFound = false;
+        List<Product> findProducts = products
+                .stream()
+                .filter(product -> product.getName()
+                        .toLowerCase()
+                        .contains(partOf_name))
+                .collect(Collectors.toList());
 
-        for (Product product:products
-        ) {
-            if (product.getName().toLowerCase().contains(partOf_name)) {
-                findProducts.add(product);
-                isProductFound = true;
-            }
+        if (!findProducts.isEmpty()) {
+            System.out.println("Намерени са " + findProducts.size() + " бр. продукти с "+partOf_name);
+            findProducts
+                    .forEach(printer::printProductDetails);
         }
-        if (findProducts.size()!=0) {
-            for (Product product : findProducts
-            ) {
-                System.out.println("Намерени са " + findProducts.size() + " бр. продукти.");
-                this.printer.printProductDetails(product);
-            }
-        }
-        if (!isProductFound){
+        else {
             System.out.println("Няма продукт - "+partOf_name);
         }
-        return null;
+        return findProducts;
     }
     public List<Product> findProductByName(InputStream inputStream){
         this.scanner = new Scanner(inputStream);

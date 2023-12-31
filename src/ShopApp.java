@@ -95,6 +95,8 @@ public class ShopApp {
 
                     switch (employeeChoice){
                         case 1: store.printaAllProducts();break;
+                        case 22: store.printExpiredProducts();break;
+                        case 23: store.reducePriceForExpiringProducts();break;
                         case 4: store.findProductById(System.in);break;
                         case 5: store.findProductByName(System.in);break;
                         case 21: store.findProductsByPartOfName(System.in);break;
@@ -153,7 +155,7 @@ public class ShopApp {
                 case 6:
                     System.out.println("Обща цена на продуктите в кошницата: "+user.calculateTotalPrice()+" лв.");break;
                 case 7: user.checkout(false);break;
-
+                case 8: user.searchProductsByPartOfName();break;
                 case 3: exitRequested=true;break;
                 default:
                     System.out.println("Невалиден избор. Моля, опитайте отново.");break;
